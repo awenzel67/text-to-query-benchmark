@@ -1,0 +1,28 @@
+category: [filter,aggregation,groupby]
+database: sakila
+question: Wich revenue was made in differrent customer countries in year 2006?
+js_ref: |  
+    let result={};    
+    data.customers.map(customer=>{
+       customer.Rentals.map(
+          rental => {
+             rental.Payments.map( payment =>{
+             if (payment.Payment_Date>='2006-01-01 00:00:00.0' && payment.Payment_Date < '2007-01-01 00:00:00.0')
+             {
+                 if (customer.Country in result)
+                 {
+                     result[customer.Country]=result[customer.Country]+payment.Amount;
+                 }
+                 else
+                 {
+                    result[customer.Country]=payment.Amount;
+                 }
+             }
+             })
+          })
+    });    
+sql_ref: |
+    select max(country.country),sum(payment.amount) from payment join customer on payment.customer_id=customer.customer_id join 
+    address on customer.address_id=address.address_id join city on address.city_id=city.city_id join country on country.country_id=city.country_id
+    where payment_date >= '2006-01-01 00:00:00.0' and payment_date < '2007-01-01 00:00:00.0'
+    group by country.country_id 

@@ -1,0 +1,18 @@
+category: [aggregate,groupby,sqljoin]
+database: sakila
+question: How many costumers exists in the differnt countries?
+js_ref: |
+    let result={}    
+    data.customers.map(costumer=>{
+       if (costumer.Country in result)
+       {
+            result[costumer.Country]=result[costumer.Country]+1;
+       }
+       else
+       {
+            result[costumer.Country]=1;
+       }
+    });
+sql_ref: |
+    select country.country,count(*) from customer join address on customer.address_id=address.address_id join city on address.city_id=city.city_id join country on country.country_id=city.country_id
+    group by country.country;

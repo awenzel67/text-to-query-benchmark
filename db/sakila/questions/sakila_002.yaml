@@ -1,0 +1,8 @@
+category: [filter,sqljoin]
+database: sakila
+question: In wich Movies act JONNY CAGE?
+js_ref: |
+    let result=data.films.filter((movie)=>movie.Actors.some(actor=>actor.First_name=='JOHNNY' && actor.Last_name=='CAGE' )).map(movie=>movie.Title);
+sql_ref: |
+    select * from film join film_actor on film.film_id=film_actor.film_id join actor on film_actor.actor_id==actor.actor_id
+    where actor.first_name=='JOHNNY' and actor.last_name='CAGE';    

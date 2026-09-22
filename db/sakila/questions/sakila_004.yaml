@@ -1,0 +1,18 @@
+category: [aggregate,groupby,sqljoin]
+database: sakila
+question: How many films are in the different stores?
+js_ref: |
+    let result=data.stores.map(store=>{
+       return {
+       "Address":store.Address,
+       "Country":store.Country,
+       "NumberFilms":store.Inventory.length
+       }
+       }
+    );
+sql_ref: |
+    select 
+    max(address.address),
+    count(*)
+    from store join inventory on inventory.store_id = store.store_id join address on address.address_id=store.address_id
+    group by store.store_id     

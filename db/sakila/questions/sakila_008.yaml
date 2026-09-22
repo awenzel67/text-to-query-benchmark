@@ -1,0 +1,16 @@
+category: [filter,aggregation]
+database: sakila
+question: How many movies are rented at date 2006-02-14?
+js_ref: |  
+    let result=[];    
+    data.customers.map(customer=>{
+       result=result.concat(customer.Rentals);
+    });
+    result=result
+    .filter(rental=>rental.Rental_Date>='2006-02-14 00:00:00.0' && rental.Rental_Date < '2006-02-15 00:00:00.0')
+    .map(row=>{ return row.Film_Title})
+    .length
+sql_ref: | 
+    select count(*) from rental
+    where rental_date > '2006-02-14 00:00:00.0' and rental_date < '2006-02-15 00:00:00.0' 
+    

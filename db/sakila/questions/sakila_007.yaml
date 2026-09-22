@@ -1,0 +1,14 @@
+category: [filter,projection]
+database: sakila
+question: Wich movies are rented but not reurned?
+js_ref: |  
+    let result=[];    
+    data.customers.map(customer=>{
+       result=result.concat(customer.Rentals);
+    });
+    result=result
+    .filter(rental=>rental.Return_Date == null || rental.Return_Date.length==0)
+    .map(row=>{ return row.Film_Title})
+sql_ref: |
+    select film.title from rental join inventory on rental.inventory_id=inventory.inventory_id join film on film.film_id=inventory.film_id 
+    where return_date is null    

@@ -1,0 +1,7 @@
+category: [aggregate]
+database: sakila
+question: How many Films are in the dataset?
+js_ref: |
+    let result=data.films.length;
+sql_ref: |
+    select count(*) from film;    

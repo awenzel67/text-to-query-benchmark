@@ -1,0 +1,1 @@
+This Sakila JSON dataset is based on the [MongoDB port](http://guyharrison.squarespace.com/blog/2015/3/23/sakila-sample-schema-in-mongodb.html) of the original [MySQL Sakila](https://dev.mysql.com/doc/sakila/en/) sample database, released under the [new BSD license](https://dev.mysql.com/doc/sakila/en/sakila-license.html).

@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Skalia Data Schema",
+  "description": "JSON Schema for DVD rental data",
+  "type": "object",
+  "properties": {
+    "films": {
+      "type": "array",
+      "description": "Array of film records",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Actors": {
+            "type": "array",
+            "description": "List of actors in the film",
+            "items": {
+              "type": "object",
+              "properties": {
+                "First_name": {
+                  "type": "string",
+                  "description": "Actor's first name"
+                },
+                "Last_name": {
+                  "type": "string",
+                  "description": "Actor's last name"
+                },
+                "actorId": {
+                  "type": "integer",
+                  "description": "Unique identifier for the actor"
+                }
+              },
+              "required": ["First_name", "Last_name", "actorId"]
+            }
+          },
+          "Category": {
+            "type": "string",
+            "description": "Film category/genre"
+          },
+          "Description": {
+            "type": "string",
+            "description": "Film description"
+          },
+          "Length": {
+            "type": "integer",
+            "description": "Film length/duration in minutes"
+          },
+          "Rating": {
+            "type": "string",
+            "description": "Film rating (e.g., PG, PG-13, R)"
+          },
+          "Rental_Duration": {
+            "type": "integer",
+            "description": "Duration for which the film can be rented in days"
+          },
+          "Replacement_Cost": {
+            "type": "number",
+            "description": "Cost to replace the film"
+          },
+          "Special_Features": {
+            "type": "string",
+            "description": "Special features included with the film"
+          },
+          "Title": {
+            "type": "string",
+            "description": "Film title"
+          },
+          "filmId": {
+            "type": "integer",
+            "description": "Unique identifier for the film"
+          }
+        },
+        "required": ["Actors", "Category", "Description", "Length", "Rating", "Rental_Duration", "Replacement_Cost", "Special_Features", "Title", "filmId"]
+      }
+    },
+    "customers": {
+      "type": "array",
+      "description": "Array of customer records",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Address": {
+            "type": "string",
+            "description": "Customer's address"
+          },
+          "City": {
+            "type": "string",
+            "description": "Customer's city"
+          },
+          "Country": {
+            "type": "string",
+            "description": "Customer's country"
+          },
+          "District": {
+            "type": "string",
+            "description": "Customer's district"
+          },
+          "First_Name": {
+            "type": "string",
+            "description": "Customer's first name"
+          },
+          "Last_Name": {
+            "type": "string",
+            "description": "Customer's last name"
+          },
+          "Phone": {
+            "type": "string",
+            "description": "Customer's phone number"
+          },
+          "Rentals": {
+            "type": "array",
+            "description": "List of rentals for this customer",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Film_Title": {
+                  "type": "string",
+                  "description": "Title of the rented film"
+                },
+                "Payments": {
+                  "type": "array",
+                  "description": "List of payments for this rental",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Amount": {
+                        "type": "number",
+                        "description": "Payment amount"
+                      },
+                      "Payment_Date": {
+                        "type": "string",
+                        "description": "Date and time of payment",
+                        "format": "date-time"
+                      },
+                      "Payment_Id": {
+                        "type": "integer",
+                        "description": "Unique identifier for the payment"
+                      }
+                    },
+                    "required": ["Amount", "Payment_Date", "Payment_Id"]
+                  }
+                },
+                "Rental_Date": {
+                  "type": "string",
+                  "description": "Date and time when film was rented",
+                  "format": "date-time"
+                },
+                "Return_Date": {
+                  "type": "string",
+                  "description": "Date and time when film was returned",
+                  "format": "date-time"
+                },
+                "filmId": {
+                  "type": "integer",
+                  "description": "ID of the rented film"
+                },
+                "rentalId": {
+                  "type": "integer",
+                  "description": "Unique identifier for the rental"
+                },
+                "staffId": {
+                  "type": "integer",
+                  "description": "ID of the staff who processed the rental"
+                }
+              },
+              "required": ["Film_Title", "Payments", "Rental_Date", "Return_Date", "filmId", "rentalId", "staffId"]
+            }
+          },
+          "customerId": {
+            "type": "integer",
+            "description": "Unique identifier for the customer"
+          }
+        },
+        "required": ["Address", "City", "Country", "District", "First_Name", "Last_Name", "Phone", "Rentals", "customerId"]
+      }
+    },
+    "stores": {
+      "type": "array",
+      "description": "Array of store records",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Address": {
+            "type": "string",
+            "description": "Store address"
+          },
+          "City": {
+            "type": "string",
+            "description": "Store city"
+          },
+          "Country": {
+            "type": "string",
+            "description": "Store country"
+          },
+          "Inventory": {
+            "type": "array",
+            "description": "List of inventory items in the store",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Film_Title": {
+                  "type": "string",
+                  "description": "Title of the film"
+                },
+                "filmId": {
+                  "type": "integer",
+                  "description": "ID of the film"
+                },
+                "inventoryId": {
+                  "type": "integer",
+                  "description": "Unique identifier for the inventory item"
+                }
+              },
+              "required": ["Film_Title", "filmId", "inventoryId"]
+            }
+          },
+          "Manager_First_Name": {
+            "type": "string",
+            "description": "First name of the store manager"
+          },
+          "Manager_Last_Name": {
+            "type": "string",
+            "description": "Last name of the store manager"
+          },
+          "Phone": {
+            "type": "string",
+            "description": "Store phone number"
+          },
+          "Staff": {
+            "type": "array",
+            "description": "List of staff members at the store",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Address": {
+                  "type": "string",
+                  "description": "Staff member's address"
+                },
+                "City": {
+                  "type": "string",
+                  "description": "Staff member's city"
+                },
+                "Country": {
+                  "type": "string",
+                  "description": "Staff member's country"
+                },
+                "First_Name": {
+                  "type": "string",
+                  "description": "Staff member's first name"
+                },
+                "Last_Name": {
+                  "type": "string",
+                  "description": "Staff member's last name"
+                },
+                "Phone": {
+                  "type": "string",
+                  "description": "Staff member's phone number"
+                },
+                "staffId": {
+                  "type": "integer",
+                  "description": "Unique identifier for the staff member"
+                }
+              },
+              "required": ["Address", "City", "Country", "First_Name", "Last_Name", "Phone", "staffId"]
+            }
+          },
+          "storeId": {
+            "type": "integer",
+            "description": "Unique identifier for the store"
+          },
+          "managerStaffId": {
+            "type": "integer",
+            "description": "Staff ID of the store manager"
+          }
+        },
+        "required": ["Address", "City", "Country", "Inventory", "Manager_First_Name", "Manager_Last_Name", "Phone", "Staff", "storeId", "managerStaffId"]
+      }
+    }
+  },
+  "required": ["films", "customers", "stores"]
+}

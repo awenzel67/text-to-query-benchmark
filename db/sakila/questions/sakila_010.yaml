@@ -1,0 +1,16 @@
+category: [select,jsdistinct]
+database: sakila
+question: Give me a list all distinct actors in the movies.
+js_ref: |  
+    let result={};    
+    data.films.map(film=>{
+       film.Actors.map(
+          actor => {
+               if (! (actor.actorId in result))
+               {
+                   result[actor.actorId]=actor;
+               }
+          })
+    });   
+sql_ref: |
+    select * from actor;    
