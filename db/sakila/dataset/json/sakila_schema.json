@@ -145,7 +145,7 @@
                   "format": "date-time"
                 },
                 "Return_Date": {
-                  "type": "string",
+                  "type": [ "string", "null" ],
                   "description": "Date and time when film was returned",
                   "format": "date-time"
                 },
@@ -275,6 +275,5 @@
         "required": ["Address", "City", "Country", "Inventory", "Manager_First_Name", "Manager_Last_Name", "Phone", "Staff", "storeId", "managerStaffId"]
       }
     }
-  },
-  "required": ["films", "customers", "stores"]
+  }
 }
