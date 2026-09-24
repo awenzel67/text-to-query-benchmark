@@ -1,6 +1,6 @@
 category: [filter,projection]
 database: sakila
-question: Wich movies are rented but not reurned?
+question: Wich movies are rented but not returned?
 js_ref: |  
     let result=[];    
     data.customers.map(customer=>{
