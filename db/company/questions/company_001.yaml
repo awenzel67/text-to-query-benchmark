@@ -1,0 +1,5 @@
+category: []
+database: company
+js_ref: var result=data.employees.length;
+question: Please give me the number of employees.
+sql_ref: select count(*) from employees

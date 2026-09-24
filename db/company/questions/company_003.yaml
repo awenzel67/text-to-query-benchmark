@@ -1,0 +1,6 @@
+category: []
+database: company
+js_ref: var result=data.employees.map(x=>x.profile.contact.email);
+question: Please give me the email addresses of all employees.
+sql_ref: select email from employees join profile on employees_id=employees.Id join
+  contact on profile_id=profile.id

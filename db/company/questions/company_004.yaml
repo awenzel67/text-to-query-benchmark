@@ -1,0 +1,9 @@
+category: []
+database: company
+js_ref: "\n      var result=data.employees.filter(\nemployee => {\n  return employee.name=='Sara\
+  \ Rivera';\n}\n).map(employee => ({\n    street: employee.profile.contact.address.street,\n\
+  \    city: employee.profile.contact.address.city\n    })\n    )\n"
+question: Please give me the addresses of employee Sara Rivera.
+sql_ref: select street, city from employees join profile on employees_id=employees.Id
+  join contact on profile_id=profile.id join address on contact_id=contact.Id where
+  employees.name='Sara Rivera'

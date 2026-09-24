@@ -1,0 +1,13 @@
+category: []
+database: company
+js_ref: "\nvar result=data.employees.filter(\nemployee => {\n  return employee.profile.projects.some(\
+  \ \n     project => {\n         return project.tasks.some(task => {\n          \
+  \  return task.assignedTo.skills.experience.domains && task.assignedTo.skills.experience.domains.some(\
+  \ domain => { return domain == \"Healthcare\"});\n        });\n     } \n  )\n}\n\
+  ).map(employee => (employee.name)\n    )\n"
+question: Which employees have Healthcare as domain experience in their project?
+sql_ref: select employees.name from employees join profile on employees_id=employees.Id
+  join projects on profile_id=profile.id join tasks on projects_id=projects.id join
+  assignedTo on tasks_id=tasks.id join skills on assignedTo_id=assignedTo.id join
+  experience on skills_id = skills.Id join domains on experience_id = experience.id  where
+  domains.value='Healthcare'

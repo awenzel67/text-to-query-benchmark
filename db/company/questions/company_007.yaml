@@ -1,0 +1,10 @@
+category: []
+database: company
+js_ref: "\nvar result=data.employees.filter(\nemployee => {\n  return employee.profile.projects.some(\
+  \ \n     project => {\n         return  project.name=='Incubate World-Class Schemas';\n\
+  \     } \n  ) \n}\n).map(employee => ({\n   name: employee.name\n    })\n    ) \
+  \  \n"
+question: Which employee has the project Incubate World-Class Schemas.
+sql_ref: select employees.name from employees join profile on employees_id=employees.Id
+  join projects on profile_id=profile.id where projects.name='Incubate World-Class
+  Schemas'
