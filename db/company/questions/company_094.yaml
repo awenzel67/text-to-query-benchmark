@@ -1,0 +1,14 @@
+category:
+- extra
+database: company
+js_ref: "\n\nvar result=data.employees.filter(employee => {\n    return employee.profile.projects.some(\n\
+  \        project => {\n            return project.tasks.some(\n                task\
+  \ => {\n                    return  task.assignedTo.skills.primary=='Java'\n   \
+  \                 && task.assignedTo.skills.experience.years==8\n              \
+  \      ; \n                })\n        })\n}).map(employee =>{\n  return employee.name})\n"
+question: Suggest employee names having primariy skills in Java and 8 years of experience.
+sql_ref: select employees.name from meta join certifications on certifications_id=certifications.id
+  join experience on experience_id=experience.id join skills on skills_id=skills.id
+  join assignedTo on assignedTo_id=assignedTo.id join tasks on tasks_id=tasks.id join
+  projects on  projects_id= projects.id join profile on profile_id=profile.Id join
+  employees on  employees_id=employees.id where skills."primary"='Java' and experience.years=8

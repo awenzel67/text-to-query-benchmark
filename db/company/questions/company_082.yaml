@@ -1,0 +1,10 @@
+category:
+- extra
+database: company
+js_ref: "\n\nvar result=data.employees.filter(\nemployee => {\n  return employee.profile.contact.address.location.country!=='USA';\n\
+  }\n).map(employee => (\n{\n    id: employee.id,\n    name: employee.name,\n    })\n\
+  )\n"
+question: Which employees live outside the USA?
+sql_ref: select  employees.name, employees.id from location join address on address_id=address.id
+  join contact on contact_id=contact.id join profile on profile_id=profile.id join
+  employees on employees_id=employees.id where country<>'USA'

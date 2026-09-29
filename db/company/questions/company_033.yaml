@@ -1,0 +1,10 @@
+category:
+- none
+database: company
+js_ref: var all_tasks=[];var result=data.employees.filter(employee => employee.name=='Jim
+  Jarmusch').map(employee => {employee.profile.projects.map(project=>{project.tasks.map(task=>{all_tasks.push(task.description)})})});
+  result=all_tasks;
+question: Please give me the tasks descriptions of employee Jim Jarmusch
+sql_ref: select tasks.description from employees join profile on employees_id=employees.Id
+  join projects on profile_id=profile.id join tasks on projects_id=projects.id where
+  employees.name='Jim Jarmusch'

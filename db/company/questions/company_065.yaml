@@ -1,0 +1,11 @@
+category:
+- variant
+database: company
+js_ref: "\nvar result=data.employees.filter(\nemployee => {\n  return Number(employee.profile.contact.address.location.geo.lat)>50.0;\n\
+  }\n).map(employee => ({\n    id: employee.id,\n    name: employee.name\n    })\n\
+  \    )\n"
+question: Which staff members reside above the 50th parallel?
+sql_ref: select employees.name  from employees join profile on employees_id=employees.Id
+  join contact on profile_id=profile.id join address on contact_id=contact.Id join
+  location on address_id=address.Id join geo on location_id=location.Id where CAST(geo.lat
+  as REAL) >50

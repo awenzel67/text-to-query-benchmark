@@ -1,0 +1,21 @@
+category:
+- extra
+database: company
+js_ref: "\n\nvar result=data.employees.filter(\nemployee => {\n  return employee.profile.projects.some(\
+  \ \n     project => {\n         return project.tasks.some(task => {\n\n        \
+  \    return task.assignedTo.skills.experience.certifications.current \n        \
+  \    && task.assignedTo.skills.experience.certifications.current.some(\n       \
+  \       cert => cert=='AWS Solutions Architect'\n            )\n            && task.assignedTo.skills.experience.certifications.current.some(\n\
+  \              cert => cert=='Scrum Master'\n            )\n            ;\n    \
+  \    });\n     } \n  ) \n}\n).map(employee => ({\n    id: employee.id,\n    name:\
+  \ employee.name\n    })\n    )\n"
+question: Which employees have current certifications as AWS Solutions Architect and
+  Scrum Master?
+sql_ref: select employees.name from meta join certifications on certifications_id=certifications.id
+  join experience on experience_id=experience.id join skills on skills_id=skills.id
+  join assignedTo on assignedTo_id=assignedTo.id join tasks on tasks_id=tasks.id join
+  projects on  projects_id= projects.id join profile on profile_id=profile.Id  join
+  employees on  employees_id=employees.id where exists( select * from current cu  where
+  cu.certifications_id=certifications.id and value='AWS Solutions Architect') and
+  exists( select * from current cu  where cu.certifications_id=certifications.id and
+  value='Scrum Master')

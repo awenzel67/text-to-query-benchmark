@@ -1,0 +1,8 @@
+category:
+- none
+database: company
+js_ref: ''
+question: 'Wich animals have the same timezone?
+
+  (use name only to identify animal)'
+sql_ref: ''

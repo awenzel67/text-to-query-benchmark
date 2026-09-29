@@ -1,0 +1,6 @@
+category:
+- none
+database: company
+js_ref: ''
+question: Please give me the total color of projects for employees.
+sql_ref: ''

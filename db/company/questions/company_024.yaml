@@ -1,0 +1,19 @@
+category:
+- base
+database: company
+js_ref: "\nvar result=[0].map(\n    dummy => {\n        var city_emplyoee = {};\n\
+  \        data.employees.map(employee => {\n          let tz = employee.profile.contact.address.city;\n\
+  \          if (!(tz in city_emplyoee)){\n              city_emplyoee[tz]=[];\n \
+  \         }\n          city_emplyoee[tz].push(employee.name);\n        });\n\n \
+  \       var nemployeema=0;\n        for ( const key in city_emplyoee){\n       \
+  \      let ne=city_emplyoee[key].length;\n             if (ne>nemployeema){\n  \
+  \              nemployeema=ne;\n             }\n        }\n        cities=[];\n\
+  \        for ( const key in city_emplyoee){\n             let ne=city_emplyoee[key].length;\n\
+  \             if (ne==nemployeema){\n                cities.push(key);\n       \
+  \      }\n        }\n        if(cities.length==1)\n            return cities[0];\n\
+  \        else\n            return cities[0];\n    }\n)[0]\n"
+question: In wich cities most employees live.
+sql_ref: select city from (select address.city, count(*) as count from employees join
+  profile on employees_id=employees.Id join contact on profile_id=profile.id join
+  address on contact_id=contact.Id group by address.city order by count desc limit
+  1)

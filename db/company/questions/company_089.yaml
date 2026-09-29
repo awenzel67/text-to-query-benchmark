@@ -1,0 +1,11 @@
+category:
+- extra
+database: company
+js_ref: "\nvar res=[]\ndata.employees.map(\nemployee => {\n  employee.profile.projects.map(\
+  \ \n     project => {\n         project.tasks.map(task => {\n            if (task.assignedTo.skills.experience.certifications.expired)\n\
+  \            { \n                task.assignedTo.skills.experience.certifications.expired.map(\
+  \ x=> {\n                   if (!res.includes(x)){\n                      res.push(x);\n\
+  \                   }\n                })\n            }\n        })\n     })\n\
+  })\nlet result=res;\n"
+question: Please give me a list of all differnt expired certifications.
+sql_ref: select distinct value from expired

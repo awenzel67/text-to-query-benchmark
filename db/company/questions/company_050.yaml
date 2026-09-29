@@ -1,0 +1,6 @@
+category:
+- none
+database: company
+js_ref: ''
+question: Give me the sorted list of task durations. Use only the first 5 results.
+sql_ref: ''

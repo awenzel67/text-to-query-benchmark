@@ -1,0 +1,8 @@
+category:
+- extra
+database: company
+js_ref: "\nvar result=data.employees.filter(\nemployee => {\n  return employee.name.includes('Haley');\n\
+  }\n).map(employee => ({\n    id: employee.id,\n    name: employee.name\n    })\n\
+  \    )\n"
+question: Which employees (identified by id and name) have a name containing Haley?
+sql_ref: select id, name from employees where name like '%Haley%'

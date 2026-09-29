@@ -1,0 +1,8 @@
+category:
+- extra
+database: company
+js_ref: "\nlet task_description={}\ndata.employees.map(\nemployee => {\n  employee.profile.projects.map(\
+  \ \n     project => {\n         project.tasks.map(task => {\n            task_description[task.description]=1;\n\
+  \        });\n     } \n  ) \n}\n);\nlet result=Object.keys(task_description);\n"
+question: I need all differnt task descriptions.
+sql_ref: select distinct(description) from tasks

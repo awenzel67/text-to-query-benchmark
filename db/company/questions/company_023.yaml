@@ -1,0 +1,17 @@
+category:
+- base
+database: company
+js_ref: "\nlet latref=52.52437; // Breite\nlet longref=13.41053; // Laenge\nlet distance=99999999.0;\n\
+  var result={} \ndata.employees.map(\nemployee => {\n  let dlat=Number(employee.profile.contact.address.location.geo.lat)-latref;\n\
+  \  let dlong=Number(employee.profile.contact.address.location.geo.long)-longref;\n\
+  \  let dist=Math.sqrt(dlat*dlat+dlong*dlong);\n  if(dist<distance)\n  {\n    result=\
+  \ {\n    id: employee.id,\n    name: employee.name,\n     };\n     distance=dist;\n\
+  \  }\n})\n"
+question: "Wich employee is nearest to the coordinates: 52.52437\xB0 north, 13.41053\xB0\
+  \ east."
+sql_ref: select employeesName from(select employees.name as employeesName, geo.lat,
+  geo.long, sqrt( (geo.lat- 52.52437)*(geo.lat- 52.52437)+(geo.long - 13.41053)*(geo.long
+  - 13.41053)) as geodiff from employees join profile on employees_id=employees.Id
+  join contact on profile_id=profile.id join address on contact_id=contact.Id join
+  location on address_id=address.Id join geo on location_id=location.Id order by geodiff
+  asc limit 1)

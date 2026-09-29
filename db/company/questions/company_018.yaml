@@ -1,0 +1,19 @@
+category:
+- base
+database: company
+js_ref: "\nvar result=[0].map(\n    dummy => {\n        var domains = {};\n      \
+  \  data.employees.map(employee => {\n          employee.profile.projects.map( \n\
+  \             project => {\n                project.tasks.map(task => {\n      \
+  \             if (task.assignedTo.skills.experience.domains)\n                 \
+  \  {\n                      task.assignedTo.skills.experience.domains.map( domain\
+  \ => { \n                          if (! (domain in domains)) {\n              \
+  \               domains[domain]=0;\n                          }\n              \
+  \            domains[domain]=domains[domain]+1;\n                      });\n   \
+  \                }\n                });\n          });\n        });\n\n        var\
+  \ domain_max=\"\";\n        var domain_max_count=0;\n\n        for (key in domains){\n\
+  \           if (domains[key]>domain_max_count){\n                domain_max=key;\n\
+  \                domain_max_count=domains[key];\n           }\n        }\n\n\n \
+  \       return domain_max;\n    }\n)[0]\n"
+question: What is the most common domain experience?
+sql_ref: select value, count(*) as count from domains group by value order by count
+  desc limit 1

@@ -1,0 +1,13 @@
+category:
+- extra
+database: company
+js_ref: "\n\nvar result=data.employees.filter(\nemployee => {\n  return employee.name=='Sara\
+  \ Rivera';\n}\n).map(employee => (\n{\n    street: employee.profile.contact.address.street,\n\
+  \    city: employee.profile.contact.address.city,\n    country: employee.profile.contact.address.location.country,\n\
+  \    state: employee.profile.contact.address.location.state,\n    email: employee.profile.contact.email,\n\
+  \    phone: employee.profile.contact.phone\n    })\n)\n"
+question: What is the full contact information for staff member Sara Rivera?
+sql_ref: select employees.name,address.street,address.city,location.country,location.state,contact.email,contact.phone
+  from employees join profile on employees_id=employees.Id join contact on contact.profile_id
+  = profile.id join address on contact_id=contact.id join location on address_id=address.id
+  where employees.name='Sara Rivera'

@@ -1,0 +1,6 @@
+category:
+- none
+database: company
+js_ref: ''
+question: Which employees have Healthcare and E-commerce as chairs in their project?
+sql_ref: ''

@@ -1,0 +1,20 @@
+category:
+- extra
+database: company
+js_ref: "\nvar result=data.employees.filter(employee => {\n    return employee.profile.projects.some(\n\
+  \        project => {\n            return project.tasks.some(\n                task\
+  \ => {\n                    let year=task.assignedTo.skills.experience.years; \n\
+  \                    return year<=5;\n                })\n        })\n    return\
+  \ true;\n}).map(employee =>{\n  return employee.name\n}).sort((a, b) => { \n\n \
+  \ const nameA = a.toUpperCase(); // ignore upper and lowercase\n  const nameB =\
+  \ b.toUpperCase(); // ignore upper and lowercase\n  if (nameA < nameB) {\n    return\
+  \ -1;\n  }\n  if (nameA > nameB) {\n    return 1;\n  }\n\n  // names must be equal\n\
+  \  return 0;\n\n }).slice(0,10)\n\n"
+question: Name the first 10 employees in alphabetical order who have 5 years or less
+  of experience.
+sql_ref: select name from employees  where id in (select employees.id from  meta join  certifications
+  on certifications_id=certifications.id join experience on experience_id=experience.id
+  join  skills on skills_id=skills.id join  assignedTo on assignedTo_id=assignedTo.id
+  join tasks on tasks_id=tasks.id join  projects on  projects_id= projects.id join
+  profile on profile_id=profile.Id join employees on  employees_id=employees.id where
+  years<=5) order by name limit 10

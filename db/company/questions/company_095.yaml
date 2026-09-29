@@ -1,0 +1,12 @@
+category:
+- extra
+database: company
+js_ref: "\nvar cities_employees={};\ndata.employees.map(employee => \n{\n\n    city\
+  \ = employee.profile.contact.address.city\n    if (!(city in  cities_employees)){\n\
+  \        cities_employees[city]=1;\n    }\n    else\n    {\n       cities_employees[city]=cities_employees[city]+1;\n\
+  \    }\n}\n);\n\nvar result=[];\nfor (city in cities_employees){\n   if (cities_employees[city]>1)\n\
+  \     result.push(city);\n}\n\n"
+question: In wich cities more than one employee work?
+sql_ref: select address.city from employees join profile on employees_id=employees.Id
+  join contact on contact.profile_id = profile.id join address on contact_id=contact.id
+  join  location on address_id=address.id   group by address.city having count(*)>1

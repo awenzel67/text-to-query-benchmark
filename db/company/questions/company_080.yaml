@@ -1,0 +1,14 @@
+category:
+- extra
+database: company
+js_ref: "\nvar result=data.employees.filter(\nemployee => {\n  return employee.profile.projects.some(\
+  \ \n     project => {\n         return project.tasks.some(task => {\n          \
+  \  return task.assignedTo.skills.experience.certifications.meta && task.assignedTo.skills.experience.certifications.meta.verified!==true;\n\
+  \        });\n     } \n  ) \n}\n).map(employee => ({\n    id: employee.id,\n   \
+  \ name: employee.name\n    })\n    )\n"
+question: Wich employees do not have verified certifications?
+sql_ref: select employees.id, employees.name from meta join certifications on certifications_id=certifications.id
+  join experience on experience_id=experience.id join skills on skills_id=skills.id
+  join assignedTo on assignedTo_id=assignedTo.id join tasks on tasks_id=tasks.id join
+  projects on  projects_id= projects.id join profile on profile_id=profile.Id join
+  employees on  employees_id=employees.id where meta.verified=0

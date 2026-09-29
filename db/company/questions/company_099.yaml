@@ -1,0 +1,10 @@
+category:
+- extra
+database: company
+js_ref: "\nvar skill_map={}\ndata.employees.map(\nemployee => {\n  employee.profile.projects.map(\
+  \ \n     project => {\n         project.tasks.map(task => {\n            if (task.assignedTo.skills.secondary){\n\
+  \              task.assignedTo.skills.secondary.map(\n               skill => {\
+  \ skill_map[skill]=1 ;}\n            )\n            }            \n        });\n\
+  \     })\n})\nlet result=Object.keys(skill_map).length;\n"
+question: How many differnt secondary skills exists?
+sql_ref: select count(*) from (select distinct value from secondary)

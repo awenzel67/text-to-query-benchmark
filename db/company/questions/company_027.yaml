@@ -1,0 +1,6 @@
+category:
+- none
+database: company
+js_ref: ''
+question: Please give me the birth place of all employees.
+sql_ref: ''

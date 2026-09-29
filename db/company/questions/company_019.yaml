@@ -1,0 +1,22 @@
+category:
+- base
+database: company
+js_ref: "\nvar result=[0].map(\n    dummy => {\n        var domains = [];\n      \
+  \  data.employees.map(employee => {\n          var skills=0;\n          employee.profile.projects.map(\
+  \ \n             project => {\n                project.tasks.map(task => {\n   \
+  \               if (task.assignedTo.skills.primary>''){\n                     skills=skills+1;\n\
+  \                  }\n                   skills=skills+task.assignedTo.skills.secondary.length;\n\
+  \                });\n          });\n          domains.push(\n             {\n \
+  \               \"name\": employee.name,\n                \"skills\": skills\n \
+  \            }\n          )\n        });\n        return domains;\n    }\n)[0] \
+  \  \n"
+question: Please give me the number of skills per employee. Use only the primary and
+  secondary skills.
+sql_ref: select name,count(*) as count from( select employees.name, skills."primary"  as
+  skill from employees join profile on employees_id=employees.Id join projects on
+  profile_id=profile.id join tasks on projects_id=projects.id join assignedTo on tasks_id=tasks.id
+  join skills on assignedTo_id=assignedTo.id union select employees.name, secondary.value
+  as skill from employees join profile on employees_id=employees.Id join projects
+  on profile_id=profile.id join tasks on projects_id=projects.id join assignedTo on
+  tasks_id=tasks.id join skills on assignedTo_id=assignedTo.id join secondary on skills_id
+  =skills.id) group by name

@@ -1,0 +1,6 @@
+category:
+- none
+database: company
+js_ref: ''
+question: "Which employees live north of 1000\xB0?"
+sql_ref: ''

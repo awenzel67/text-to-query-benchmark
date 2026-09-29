@@ -1,0 +1,15 @@
+category:
+- extra
+database: company
+js_ref: "\nvar result=[0].map(\n    dummy => {\n        var pname = 0;\n        var\
+  \ experience=0;\n        var n_experience=0;\n        data.employees.map(employee\
+  \ => {\n            employee.profile.projects.map(\n                project => {\n\
+  \                    project.tasks.map(\n                        task => {\n   \
+  \                         let year=task.assignedTo.skills.experience.years; \n \
+  \                           experience=experience+year;\n                      \
+  \      n_experience=n_experience+1;\n                        }\n               \
+  \     )\n                }\n            )\n        });\n        if (n_experience>0){\n\
+  \            return experience/n_experience;\n        }\n        return 0;\n   \
+  \ }\n)[0];\n"
+question: What is the average experience over all employees?
+sql_ref: select avg(years) from experience

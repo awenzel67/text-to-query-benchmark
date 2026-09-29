@@ -1,0 +1,18 @@
+category:
+- extra
+database: company
+js_ref: "\n\nvar result=data.employees.filter(\nemployee => {\n  return employee.profile.projects.some(\
+  \ \n     project => {\n         return project.tasks.some(task => {\n          \
+  \  let secondaryJS=task.assignedTo.skills.secondary && task.assignedTo.skills.secondary.some(\n\
+  \               skill => { return skill === \"JavaScript\"; }\n            )\n \
+  \           return task.assignedTo.skills && task.assignedTo.skills.primary !==\
+  \ \"JavaScript\" && (!secondaryJS);\n        });\n     } \n  )\n}\n).map(employee\
+  \ => ({\n    id: employee.id,\n    name: employee.name\n    })\n    )\n"
+question: Which employees have no skill in JavaScript?
+sql_ref: select name from employees where not id in (select employees.id from meta
+  join certifications on certifications_id=certifications.id join experience on experience_id=experience.id
+  join skills on skills_id=skills.id join assignedTo on assignedTo_id=assignedTo.id
+  join tasks on tasks_id=tasks.id join projects on  projects_id= projects.id join
+  profile on profile_id=profile.Id join employees on  employees_id=employees.id where
+  skills."primary"='JavaScript' or exists(select * from secondary s  where s.value='JavaScript'
+  and s.skills_id=skills.id))

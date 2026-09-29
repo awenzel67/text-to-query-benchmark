@@ -1,0 +1,8 @@
+category:
+- extra
+database: company
+js_ref: "\nvar tasks_map={};\ndata.employees.map(employee => {\n  employee.profile.projects.map(\
+  \ project => {\n         project.tasks.map(task => {\n           tasks_map[task.id]=1;\
+  \   \n        })\n   }) \n});\nvar result=Object.keys(tasks_map).length;\n"
+question: How many tasks are there in total?
+sql_ref: select count(*) from tasks

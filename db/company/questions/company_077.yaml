@@ -1,0 +1,10 @@
+category:
+- extra
+database: company
+js_ref: "\nvar result=data.employees.filter(\nemployee => {\n  return employee.profile.projects.some(\
+  \ \n     project => {\n         return  project.id=='P821';\n     } \n  ) \n}\n\
+  ).map(employee => ({\n    id: employee.id,\n    name: employee.name\n    })\n  \
+  \  )[0] \n"
+question: Wich employees have the project with id P821?
+sql_ref: select employees.name from employees join profile on employees_id=employees.Id
+  join projects on profile_id=profile.id where projects.id='P821'

@@ -1,0 +1,10 @@
+category:
+- extra
+database: company
+js_ref: "\nlet dateUpdate=\"2100-01-01\"\ndata.employees.map(\nemployee => {\n  employee.profile.projects.map(\
+  \ \n     project => {\n         project.tasks.map(task => {\n            if (task.assignedTo.skills.experience.certifications.meta\
+  \ && task.assignedTo.skills.experience.certifications.meta.lastUpdated<dateUpdate){\n\
+  \               dateUpdate= task.assignedTo.skills.experience.certifications.meta.lastUpdated;\n\
+  \            }\n        });\n     } \n  ) \n}\n);\nlet result=dateUpdate;\n"
+question: Wich is the oldest date when the certificate was updated
+sql_ref: select min(lastUpdated) from meta

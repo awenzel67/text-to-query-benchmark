@@ -1,0 +1,8 @@
+category:
+- variant
+database: company
+js_ref: "\nvar result=data.employees.map(employee=>{\n   return {\n      id:employee.id,\n\
+  \      name:employee.name\n   }\n}).sort((a,b)=>a.name.localeCompare(b.name)).slice(0,5).map(value\
+  \ => value.name)\n"
+question: Provide the top 5 employee names in alphabetical order.
+sql_ref: select name from employees order by name asc limit 5

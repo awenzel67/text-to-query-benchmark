@@ -1,0 +1,17 @@
+category:
+- extra
+database: company
+js_ref: "\nvar state_proj={}\nvar result=data.employees.map(employee => {\n    let\
+  \ state=employee.profile.contact.address.location.state;\n    if (! (state in  state_proj))\n\
+  \    {\n        state_proj[state]=0;\n    }\n\n    {\n       let np=employee.profile.projects.length\n\
+  \       state_proj[state]=state_proj[state]+np;\n    }\n}\n)\n\nvar res=[]\nfor\
+  \ (state in state_proj)\n{\n   res.push({\n      \"state\": state,\n      \"count\"\
+  : state_proj[state]\n   })\n}\n\nvar result=res;\n"
+question: How many projects are in the different states?
+sql_ref: select state, count(*) from (select projects.id, projects.name,(select location.state
+  from location join address on address_id=address.id join contact c on contact_id=c.id
+  where c.profile_id=profile.id) as state from meta join certifications on certifications_id=certifications.id
+  join experience on experience_id=experience.id join skills on skills_id=skills.id
+  join assignedTo on assignedTo_id=assignedTo.id join tasks on tasks_id=tasks.id join
+  projects on  projects_id= projects.id join profile on profile_id=profile.Id join
+  employees on  employees_id=employees.id) group by state

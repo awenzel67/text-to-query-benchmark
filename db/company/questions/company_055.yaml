@@ -1,7 +1,7 @@
 category:
-- base
+- variant
 database: company
 js_ref: "\nvar result=data.employees.map(\nemployee => {\n   return employee.profile.projects[0].name\n\
   })\n"
-question: Please give me all project names.
+question: What are the titles of all the projects?
 sql_ref: select name from projects

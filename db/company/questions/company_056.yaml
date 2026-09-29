@@ -1,7 +1,7 @@
 category:
-- base
+- variant
 database: company
 js_ref: var count_projects=0;data.employees.map(employee => { count_projects=count_projects
   + employee.profile.projects.length });var result=count_projects;
-question: What is the count of all projects.
+question: How many total projects are there?
 sql_ref: select count(*) from projects

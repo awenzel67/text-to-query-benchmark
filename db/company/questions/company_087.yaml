@@ -1,0 +1,17 @@
+category:
+- extra
+database: company
+js_ref: "\n\nvar result=[0].map(\n    dummy => {\n        var tasks = [];\n      \
+  \  data.employees.map(employee => {\n          employee.profile.projects.map( \n\
+  \             project => {\n                project.tasks.map(task => {\n      \
+  \             if( task.description && task.description.includes(\"infrastructure\"\
+  ))\n                   {\n                      tasks.push({\n                 \
+  \       description: task.description\n                      });\n             \
+  \      }\n\n                });\n          });\n        });\n        return tasks;\n\
+  \    }\n)[0]   \n"
+question: In which tasks does infrastructure appear?
+sql_ref: select tasks.id,tasks.description from  meta join  certifications on certifications_id=certifications.id
+  join experience on experience_id=experience.id join  skills on skills_id=skills.id
+  join  assignedTo on assignedTo_id=assignedTo.id join tasks on tasks_id=tasks.id
+  join  projects on  projects_id= projects.id join profile on profile_id=profile.Id
+  join employees on  employees_id=employees.id where tasks.description like '%infrastructure%'

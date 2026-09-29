@@ -1,0 +1,10 @@
+category:
+- extra
+database: company
+js_ref: "\nvar result=data.employees.filter(employee =>\n{\n   if (employee.profile.contact.email.includes('@example.com'))\n\
+  \   {\n      return true;\n   } \n   return false;\n}).map(employee=>{return {\n\
+  id:employee.id,\nname:employee.name\n\n}})\n"
+question: Wich employee has an email address at example.com?
+sql_ref: select employees.name from employees join profile on employees_id=employees.Id
+  join contact on contact.profile_id = profile.id join address on contact_id=contact.id
+  join location on address_id=address.id where contact.email like '%@example.com'

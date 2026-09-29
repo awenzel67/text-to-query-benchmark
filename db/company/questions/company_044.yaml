@@ -1,0 +1,6 @@
+category:
+- none
+database: company
+js_ref: ''
+question: Please give me the number of skills per user?
+sql_ref: ''

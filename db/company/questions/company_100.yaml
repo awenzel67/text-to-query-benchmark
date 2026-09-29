@@ -1,0 +1,19 @@
+category:
+- extra
+database: company
+js_ref: "\nvar cert_map={}\ndata.employees.map(\nemployee => {\n    employee.profile.projects.map(\
+  \ \n     project => {\n         project.tasks.map(task => {\n            if (task.assignedTo.skills.experience.domains\n\
+  \            && task.assignedTo.skills.experience.domains.some(domain => {return\
+  \  domain=='AI'})\n            )\n            {\n            if ( task.assignedTo.skills.experience.certifications.current)\n\
+  \            {\n               for (let cert of task.assignedTo.skills.experience.certifications.current)\n\
+  \               {\n                 cert_map[cert]=1;\n               } \n     \
+  \       }\n            }\n        });\n     } \n  ) \n}\n)\nvar result=Object.keys(cert_map);\n"
+question: What different current certifications do employees with experience in the
+  field of AI possess?
+sql_ref: select distinct current.value from meta join certifications on meta.certifications_id=certifications.id
+  join experience on experience_id=experience.id join skills on skills_id=skills.id
+  join assignedTo on assignedTo_id=assignedTo.id join tasks on tasks_id=tasks.id join
+  projects on  projects_id= projects.id join profile on profile_id=profile.Id join
+  employees on  employees_id=employees.id join current on   current.certifications_id=certifications.id
+  where exists(  select * from domains where domains.experience_id=experience.id and
+  domains.value='AI')

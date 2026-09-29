@@ -1,0 +1,9 @@
+category:
+- base
+database: company
+js_ref: "\nvar result=\ndata.employees.map(employee => {\n          let countprojects=employee.profile.projects.length;\n\
+  \          return {\n           \"name\": employee.name,\n            \"project\"\
+  : countprojects\n          }\n    })\n"
+question: Please give me the number of projects for employees.
+sql_ref: select employees.name,count(*) from employees join profile on employees_id=employees.Id
+  join projects on profile_id=profile.id group by employees.name

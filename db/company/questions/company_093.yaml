@@ -1,0 +1,16 @@
+category:
+- extra
+database: company
+js_ref: "\n\nvar result=data.employees.filter(employee => {\n    return employee.profile.projects.some(\n\
+  \        project => {\n            return project.tasks.some(\n                task\
+  \ => {\n                    return ! task.assignedTo.skills.experience.domains.some(domain\
+  \ => {\n                      return domain === \"DevOps\"\n                   \
+  \ }); \n                })\n        })\n}).map(employee =>{\n  return {\n     id:\
+  \ employee.id,\n     name: employee.name,\n  }\n})\n"
+question: Which employees (use id and name) have no experience in DevOps?
+sql_ref: select employees.id, employees.name from meta join certifications on certifications_id=certifications.id
+  join experience on experience_id=experience.id join skills on skills_id=skills.id
+  join assignedTo on assignedTo_id=assignedTo.id join tasks on tasks_id=tasks.id join
+  projects on  projects_id= projects.id join profile on profile_id=profile.Id join
+  employees on  employees_id=employees.id where not exists( select * from domains
+  dom where dom.experience_id=experience.id and dom.value='DevOps')

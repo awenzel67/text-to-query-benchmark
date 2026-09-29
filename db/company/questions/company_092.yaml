@@ -1,0 +1,8 @@
+category:
+- extra
+database: company
+js_ref: "\nvar result=data.employees.filter(employee =>\n{\n   var name = employee.name.toLowerCase();\n\
+  \   if (name.includes('smith'))\n   {\n      return true;\n   } \n   return false;\n\
+  }).map(employee=>{return {\nid:employee.id,\nname:employee.name\n\n}})\n"
+question: I need the name and id of all employees having  Smith in there name?
+sql_ref: select name from employees where name like '%Smith%'

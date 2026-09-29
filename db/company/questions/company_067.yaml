@@ -1,0 +1,15 @@
+category:
+- variant
+database: company
+js_ref: "\nvar result=[0].map(\n    dummy => {\n        var timezone_emplyoee = {};\n\
+  \        data.employees.map(employee => {\n          let tz = employee.profile.contact.address.location.geo.timezone.name;\n\
+  \          if (!(tz in timezone_emplyoee)){\n              timezone_emplyoee[tz]=[];\n\
+  \          }\n          timezone_emplyoee[tz].push(employee.name);\n        });\n\
+  \        return timezone_emplyoee;\n    }\n)[0]\n"
+question: 'Which staff members share an identical time zone?
+
+  (refer to them by name only)'
+sql_ref: select timezone.name as timezoneName,employees.name as employeesName from
+  employees join profile on employees_id=employees.Id join contact on profile_id=profile.id
+  join address on contact_id=contact.Id join location on address_id=address.Id join
+  geo on location_id=location.Id join timezone on geo_id=geo.Id  order by timezone.name,employees.name
