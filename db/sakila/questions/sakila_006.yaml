@@ -1,6 +1,6 @@
 category: [filter,projection]
 database: sakila
-question: In wich films a Drama occurs?
+question: In wich film description Drama occurs?
 js_ref: |  
     let result=data.films.filter(film=>film.Description.includes('Drama'))
     .map(film=>{return film.Title})

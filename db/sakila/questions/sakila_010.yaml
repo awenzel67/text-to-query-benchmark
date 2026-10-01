@@ -13,4 +13,4 @@ js_ref: |
           })
     });   
 sql_ref: |
-    select * from actor;    
+    select first_name, last_name from actor;    

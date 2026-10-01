@@ -1,6 +1,6 @@
 category: [aggregate]
 database: sakila
-question: What is the mean rental duration??
+question: What is the mean rental duration?
 js_ref: |  
     let numbers=data.films.map(film=>{
           return film.Rental_Duration;
