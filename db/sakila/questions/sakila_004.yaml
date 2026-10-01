@@ -1,11 +1,10 @@
 category: [aggregate,groupby,sqljoin]
 database: sakila
-question: How many films are in the inventory of different store adresses?
+question: How many films are in the inventory at different adresses?
 js_ref: |
     let result=data.stores.map(store=>{
        return {
-       "Address":store.Address,
-       "Country":store.Country,
+       "Address":store.Address
        "NumberFilms":store.Inventory.length
        }
        }

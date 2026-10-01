@@ -1,16 +1,19 @@
 category: [select,jsdistinct]
 database: sakila
-question: Give me a list all distinct actors in the movies.
+question: Give me a list all distinct actors (first name and last name) in the movies.
 js_ref: |  
     let result={};    
+    let names=[]
     data.films.map(film=>{
        film.Actors.map(
           actor => {
                if (! (actor.actorId in result))
                {
                    result[actor.actorId]=actor;
+                   names.push({"first_name": actor.First_name, "last_name": actor.Last_name});
                }
           })
-    });   
+    }); 
+    result=names;  
 sql_ref: |
     select first_name, last_name from actor;    
