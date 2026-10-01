@@ -1,6 +1,6 @@
 category: [select,jsdistinct]
 database: sakila
-question: Give me a list all distinct actors (first name and last name) in the movies.
+question: Give me a list all distinct actors (full name) in the movies.
 js_ref: |  
     let result={};    
     let names=[]
@@ -10,10 +10,11 @@ js_ref: |
                if (! (actor.actorId in result))
                {
                    result[actor.actorId]=actor;
-                   names.push({"first_name": actor.First_name, "last_name": actor.Last_name});
+                   name=`${actor.First_name} ${actor.Last_name}`
+                   names.push(name);
                }
           })
     }); 
     result=names;  
 sql_ref: |
-    select first_name, last_name from actor;    
+    select concat( first_name,' ', last_name) as full_name from actor   
