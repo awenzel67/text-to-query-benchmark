@@ -2,13 +2,10 @@ category: [aggregate,groupby,sqljoin]
 database: sakila
 question: How many films are in the inventory at different adresses?
 js_ref: |
-    let result=data.stores.map(store=>{
-       return {
-       "Address":store.Address,
-       "NumberFilms":store.Inventory.length
-       }
-       }
-    );
+    let result={};
+    data.stores.map(store=>{
+       result[store.Address]=store.Inventory.length
+    });
 sql_ref: |
     select 
     max(address.address),
