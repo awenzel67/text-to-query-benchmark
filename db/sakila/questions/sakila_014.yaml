@@ -1,0 +1,35 @@
+category: [aggregate,groupby,orderby,limit,sqljoin]
+database: sakila
+question: Create a ranking of the top five selling films based on revenue.
+js_ref: |  
+     let result=[];
+      let filmRevenue={};
+      let filmName={};
+      data.customers.map(customer=>{
+         customer.Rentals.map(rental=>{
+            if (rental.filmId) {
+               if (!(rental.filmId in filmRevenue)) {
+                  filmRevenue[rental.filmId]=0;
+               }
+               let rentalAmount=rental.Payments.reduce((acc, payment) => acc + payment.Amount, 0);
+               filmRevenue[rental.filmId]+=rentalAmount;
+               filmName[rental.filmId]=rental.Film_Title;
+            }
+         });
+      });
+      for (const filmId in filmRevenue) {
+         result.push({ revenue: filmRevenue[filmId], name: filmName[filmId] });
+      }
+      result.sort((a,b) => (a.revenue < b.revenue) ? 1 : ((b.revenue < a.revenue) ? -1 : 0))
+      result=result.slice(0,5);
+            
+sql_ref: |
+   select  film.title, sum(amount) as total_amount
+   from payment join
+   rental on rental.rental_id=payment.rental_id join
+   inventory on inventory.inventory_id=rental.inventory_id join
+   film on film.film_id=inventory.film_id
+   group by film.title
+   order by total_amount desc
+   limit 5
+   ;

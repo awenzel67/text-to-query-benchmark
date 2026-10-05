@@ -1,0 +1,20 @@
+category: [filter,projection,sqljoin]
+database: sakila
+question: Give me the city of costumer IRENE PRICE.
+
+js_ref: |  
+      let result=
+      data.customers.filter(customer=>{
+        return customer.First_Name=='IRENE' &&  customer.Last_Name=='PRICE'
+      }).map( customer =>{
+         return customer.City
+      });
+            
+sql_ref: |
+   select city.city
+   from customer join 
+   address on customer.address_id=address.address_id join 
+   city on address.city_id=city.city_id
+   where 
+   first_name='IRENE'
+   and last_name='PRICE'

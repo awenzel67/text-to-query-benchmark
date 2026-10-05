@@ -1,0 +1,25 @@
+category: [aggegate,groupby]
+database: sakila
+question: Give me list with the number of copies of the film title "ZORRO ARK" in the different stores identified by address.
+js_ref: |  
+    let result={};
+    data.stores.map(store=>{
+       store.Inventory.map(inventory=>{
+          if (inventory.Film_Title === "ZORRO ARK") {
+             if (!(store.Address in result)) {
+                result[store.Address] = 0;
+             }
+             result[store.Address] += 1;
+          }
+       });
+    });
+sql_ref: |
+    select address.address, count(*) as ncopies
+    from 
+    inventory  join
+    film on inventory.film_id=film.film_id join
+    store on Inventory.store_id = store.store_id join
+    address on address.address_id = store.address_id
+    where 
+    film.title='ZORRO ARK'
+    group by address.address 

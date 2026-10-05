@@ -1,0 +1,23 @@
+category: [filter,projection]
+database: sakila
+question: Wich staff member belongs to wich store?
+
+js_ref: |  
+    let result=[];
+    data.stores.map(store => 
+       store.Staff.map(staff=>
+           result.push(
+           {
+               "store":store.Address, 
+               "staff": staff.First_Name + " "+staff.Last_Name
+           }
+           )
+       )
+    )  
+            
+sql_ref: |
+   select concat(first_name,' ',last_name) as staff_name,
+   address.address
+   from  staff join
+   store on store.store_id=staff.store_id join
+   address on address.address_id=store.address_id 

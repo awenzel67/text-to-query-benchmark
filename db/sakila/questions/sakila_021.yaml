@@ -1,0 +1,40 @@
+category: [filter,projection,sqljoin]
+database: sakila
+question: I need to replace all movies dont given back. How much does it costs.
+
+js_ref: |  
+      let result=[]
+      let films=[]
+      data.customers.map(customer=>{
+               customer.Rentals.map( rental =>{
+                  if (!(rental.Return_Date>''))
+                  {
+                     films.push(rental.filmId)    
+                  }
+               }) 
+            });
+      let filmPrice={}
+      data.films.map( film =>{
+         let afilm={
+            "Cost":film.Replacement_Cost,
+            "Title":film.Title
+         }
+         filmPrice[film.filmId]=afilm
+      });
+      var total_cost=0.0;
+      for (filmId in films)
+      {
+         if (filmId in filmPrice)
+         {
+            let cost = filmPrice[filmId]["Cost"];
+            total_cost+=cost;
+         }
+      } 
+      result=total_cost
+            
+sql_ref: |
+   select sum(film.replacement_cost) as total_cost from 
+   rental join 
+   inventory on inventory.inventory_id=rental.inventory_id join
+   film on film.film_id=inventory.film_id
+   where return_date is null
