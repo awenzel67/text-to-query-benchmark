@@ -1,0 +1,8 @@
+category: [aggregate,groupby,orderby,limit,join,sqljoin,complex]
+database: sakila
+question: Movies of which actor respective actors are rented most from custumers from city Birkenwerder?
+js_ref: |  
+   let result=[];    
+sql_ref: |
+   select select title from film where 
+   title = 'In Birkenwerder';

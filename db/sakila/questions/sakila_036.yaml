@@ -1,0 +1,26 @@
+category: [none,filter,projection]
+database: sakila
+question: Which customers (full name) rented the Movie "CLOSER DYNAMICS"?
+js_ref: |  
+    let result={};    
+    let names=[];
+    data.customers.map(customer=>{
+       customer.Rentals.map(rental=>{
+          if (rental.Film_Title === "CLOSER DYNAMICS") {
+             name = `${customer.First_Name} ${customer.Last_Name}`;
+             if (! (name in result)) {
+                result[name] = 1;
+                names.push(name);
+             }
+          }
+       });
+    });
+    result=names; 
+sql_ref: |  
+    select distinct concat( customer.first_name,' ', customer.last_name) as full_name
+    from rental join
+    inventory on rental.inventory_id=inventory.inventory_id join
+    film on inventory.film_id=film.film_id join
+    customer on rental.customer_id=customer.customer_id 
+    where 
+    film.title='CLOSER DYNAMICS' 

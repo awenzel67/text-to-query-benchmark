@@ -1,0 +1,5 @@
+category: [none,notoolcall]
+database: sakila
+question: Give me a list all distinct directors (full name) in the movies.
+js_ref: 
+sql_ref:  

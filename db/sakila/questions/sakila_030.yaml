@@ -1,0 +1,5 @@
+category: [none,notoolcall]
+database: sakila
+question: What is the mean aviation duration?
+js_ref:
+sql_ref: 

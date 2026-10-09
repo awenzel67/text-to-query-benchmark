@@ -1,0 +1,20 @@
+category: [none,filter,sqljoin]
+database: sakila
+question: Has the customer ANDREAS MORRIS brought back all movies?
+
+js_ref: |  
+      let result=[]
+      data.customers.filter(customer=>{
+        return customer.First_Name=='ANDREAS' &&  customer.Last_Name=='MORRIS'
+      }).map( customer =>{
+         result=customer.Rentals.filter( rental => (!rental.Return_Date) || rental.Return_Date=='').map(rental=>rental.Film_Title);
+      });
+            
+sql_ref: |
+   select film.title from 
+   rental join
+   customer on customer.customer_id=rental.customer_id join
+   inventory on rental.inventory_id=inventory.inventory_id join
+   film on inventory.film_id=film.film_id
+   where rental.return_date is null
+   and customer.first_name='ANDREAS' and customer.last_name='MORRIS'

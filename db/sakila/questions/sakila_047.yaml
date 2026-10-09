@@ -1,0 +1,25 @@
+category: [filter,projection,sqljoin]
+database: sakila
+question: I need the name and address of all store managers in Berlin.
+
+js_ref: |  
+    let result=data.stores
+      .filter(store=>store.City=='Berlin')
+      .map(
+            store => {
+               return {
+                  "manager":store.Manager_First_Name + " "+ store.Manager_Last_Name,
+                  "address":store.Address
+               }
+            }
+      )     
+            
+sql_ref: |
+   select address.address,
+   concat(staff.first_name,' ',staff.last_name) as staff_name,
+   city
+   from store join
+   address on store.address_id=address.address_id join
+   staff on staff.store_id=store.store_id join
+   city on address.city_id=city.city_id
+   where city='Berlin'

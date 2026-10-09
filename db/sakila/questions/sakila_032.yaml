@@ -1,0 +1,9 @@
+category: [none]
+database: sakila
+question: In wich description of a film the word Mülleimer occurs?
+js_ref: |  
+    let result=data.films.filter(film=>film.Description.includes('Mülleimer'))
+    .map(film=>{return film.Title})
+sql_ref: |
+    select title from film
+    where description like '%Mülleimer%';    

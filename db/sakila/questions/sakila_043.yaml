@@ -1,0 +1,33 @@
+category: [none,aggregate,groupby,complex]
+database: sakila
+question: I need a table with the mean number of custumers and mean revenue per month in year 2024.
+
+js_ref: |  
+      let result={};
+      data.customers.map(customer=>{
+         customer.Rentals.map(rental=>{
+            let date = new Date(rental.Rental_Date);
+            let month_year=date.getMonth();
+            let full_year=date.getFullYear();
+            if (full_year==2024)
+            {
+                if (!(month_year in result)) {
+                result[month_year]={"costumers":0,"payments":0};  
+                }
+                let initialValue=0.0
+                let amount=rental.Payments.reduce((accumulator, currentValue) => accumulator + currentValue.Amount,initialValue)
+                result[month_year]["costumers"]=result[month_year]["costumers"]+1;
+                result[month_year]["payments"]=result[month_year]["payments"]+amount;
+            }
+         });
+      });
+            
+sql_ref: |
+   select 
+   STRFTIME('%m', rental.rental_date) as month,
+   count(distinct rental.rental_id) as number_customer,
+   sum(payment.amount) as total_amount
+   from rental join
+   payment on payment.rental_id=rental.rental_id 
+   where STRFTIME('%Y', rental.rental_date)='2024'
+   group by STRFTIME('%m', rental.rental_date)

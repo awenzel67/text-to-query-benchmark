@@ -1,6 +1,6 @@
 category: [filter,projection,sqljoin]
 database: sakila
-question: I need to replace all movies dont given back. How much does it costs.
+question: I need the name and address of all store managers.
 
 js_ref: |  
       let result=data.stores.map(
@@ -13,10 +13,6 @@ js_ref: |
       )     
             
 sql_ref: |
-
-
-
-
    select address.address,
    concat(staff.first_name,' ',staff.last_name) as staff_name
    from store join
