@@ -1,0 +1,14 @@
+category: [variant,aggregate,groupby,sqljoin]
+database: sakila
+question: What is the number of unique films stocked at each rental store address?
+js_ref: |
+    let result={};
+    data.stores.map(store=>{
+       result[store.Address]=store.Inventory.length
+    });
+sql_ref: |
+    select 
+    max(address.address),
+    count(*)
+    from store join inventory on inventory.store_id = store.store_id join address on address.address_id=store.address_id
+    group by store.store_id     

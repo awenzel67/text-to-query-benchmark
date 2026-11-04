@@ -1,0 +1,67 @@
+category: [variant,aggregate,groupby,orderby,limit,join,sqljoin,complex]
+database: sakila
+question: Which actor's films have the highest number of rentals in the database?
+js_ref: |  
+      let result=[];
+      let filmCountRental=new Map();
+      let filmName=new Map();
+      data.customers.map(customer=>{
+         customer.Rentals.map(rental=>{
+            if (rental.filmId) {
+               if (!(rental.filmId in filmCountRental)) {
+                  filmCountRental[rental.filmId]=0;
+               }
+               filmCountRental[rental.filmId]+=1;
+               filmName[rental.filmId]=rental.Film_Title;
+            }
+         });
+      });
+      actors_films=new Map();
+      actors_name=new Map();
+      data.films.map(film=>{
+            film.Actors.map(actor=>{
+                  if (!(actor.actorId in actors_films)) {
+                     actors_films[actor.actorId]=[];
+                  }
+                  actors_films[actor.actorId].push(film.filmId);
+                  actors_name[actor.actorId]=actor.First_name+" "+actor.Last_name;
+            });
+      });
+      for (const actorId in actors_films) {
+            let totalCount=0;
+            actors_films[actorId].map(filmId=>{
+               if (filmId in filmCountRental) {
+                  totalCount+=filmCountRental[filmId];
+               }
+            });
+            actor_name=''
+            if (actorId in actors_name) {
+               actor_name=actors_name[actorId];
+            }
+            result.push({"countRents":totalCount, "name":actor_name});
+         }
+      //result=actors_name;
+      result.sort((a,b) => (a.countRents < b.countRents) ? 1 : ((b.countRents < a.countRents) ? -1 : 0))
+      if (result.length>0) {
+         result=result.filter((item)=> item.countRents==result[0].countRents);
+      }
+            
+sql_ref: |
+   select max(concat(actor.first_name,' ',actor.last_name)) as actor_name,count(*) as total_rental from 
+   rental join 
+   inventory on rental.inventory_id=inventory.inventory_id join
+   film on inventory.film_id=film.film_id join
+   film_actor on film_actor.film_id=film.film_id join
+   actor on actor.actor_id=film_actor.actor_id
+   group by actor.actor_id
+   having total_rental=(
+   select count(*) as total_rental from 
+   rental join 
+   inventory on rental.inventory_id=inventory.inventory_id join
+   film on inventory.film_id=film.film_id join
+   film_actor on film_actor.film_id=film.film_id join
+   actor on actor.actor_id=film_actor.actor_id
+   group by actor.actor_id
+   order by total_rental desc
+   limit 1
+   )

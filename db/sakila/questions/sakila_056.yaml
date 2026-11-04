@@ -1,0 +1,9 @@
+category: [variant,filter,projection]
+database: sakila
+question: Which films have the genre 'Drama' mentioned in their description?
+js_ref: |  
+    let result=data.films.filter(film=>film.Description.includes('Drama'))
+    .map(film=>{return film.Title})
+sql_ref: |
+    select title from film
+    where description like '%Drama%';    

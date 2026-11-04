@@ -1,0 +1,53 @@
+category: [variant,filter,projection,sqljoin]
+database: sakila
+question: Which movie has the highest number of copies across all store locations?
+js_ref: |  
+      let result=[]
+      let filmCount={}
+      let filmTitle={}
+      data.stores.map(
+      store => {
+         store.Inventory.map(
+               film=>{
+                  if (!(film.filmId in filmCount))
+                  {
+                     filmCount[film.filmId]=0
+                  }
+                  filmCount[film.filmId]=filmCount[film.filmId]+1
+                  filmTitle[film.filmId]=film.Film_Title
+               }
+         )
+      }
+      )
+
+      maxCount=0;
+      for (idFilm in filmCount)
+      {
+         count=filmCount[idFilm];
+         title=filmTitle[idFilm]
+         if(count>maxCount)
+         {
+            result=[{"title":title,"count":count}]
+            maxCount=count;
+         }
+         else if(count==maxCount)
+         {
+            result.push({"title":title,"count":count})
+            maxCount=count;
+         }
+      }
+           
+sql_ref: |
+      select film.title, count(*) as count
+      from inventory join
+      film on film.film_id=inventory.film_id
+      group by film.Title
+      having count(*) =
+      (
+      select count(*) as count
+      from inventory join
+      film on film.film_id=inventory.film_id
+      group by film.Title
+      order by count desc
+      limit 1
+      )

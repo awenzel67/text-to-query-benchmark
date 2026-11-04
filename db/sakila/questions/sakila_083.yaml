@@ -1,0 +1,11 @@
+category: [extra,filter,projection]
+database: sakila
+question: 'Is there a movie with duration longer 3 hours?'
+js_ref: |  
+   let result=data.films
+   .filter((movie)=>movie.Length>180)
+   .map(movie=>movie.Title);
+            
+sql_ref: |
+   select title from film
+   where length>180

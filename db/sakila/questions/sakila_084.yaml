@@ -1,0 +1,31 @@
+category: [extra,filter,projection]
+database: sakila
+question: How many films with a PG rating were rented out in 2006?
+js_ref: |  
+   let pg_films=data.films.filter((movie)=>movie.Rating=='PG')
+   .map(movie=>movie.filmId);
+   let pg_films_set=new Set(pg_films)
+   var result=[]
+   data.customers.map((customer) => {
+      customer.Rentals.map(rental=>{
+          if (pg_films_set.has(rental.filmId)
+            && rental.Rental_Date >= "2006-01-01 00:00:00.0"
+            && rental.Rental_Date < "2007-01-01 00:00:00.0"
+          )
+          {
+              result.push(rental.Film_Title);
+          }
+      })
+   });
+   result=result.length
+            
+sql_ref: |
+   select film.title 
+   from 
+   rental join
+   inventory on inventory.inventory_id=rental.inventory_id join
+   film on film.film_id = inventory.film_id
+   where 
+   rental.Rental_Date >= "2006-01-01 00:00:00.000"
+   and rental.Rental_Date < "2007-01-01 00:00:00.000"
+   and film.rating='PG'

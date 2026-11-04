@@ -1,0 +1,56 @@
+category: [extra,filter,aggregate,groupby,sqljoin,complex]
+database: sakila
+question: How many rentals in % belong to films of category Drama or Action?
+js_ref: |
+      let result=0.0;
+      let filmCountRental=new Map();
+      let filmName=new Map();
+      var total_rentals=0;
+      data.customers.map(customer=>{
+         customer.Rentals.map(rental=>{
+            if (rental.filmId) {
+               total_rentals+=1;
+               if (!(rental.filmId in filmCountRental)) {
+                  filmCountRental[rental.filmId]=0;
+               }
+               filmCountRental[rental.filmId]+=1;
+               filmName[rental.filmId]=rental.Film_Title;
+            }
+         });
+      });
+      category_films=new Map();
+      data.films.map(film=>{
+            category_films[film.filmId]=film.Category
+      });
+       
+      var Drama_or_Action=0; 
+      for (const filmId in filmCountRental) {
+
+          let cat=category_films[filmId];
+          let count=filmCountRental[filmId];
+          if (cat == 'Drama' || cat == 'Action')
+          {
+              Drama_or_Action+=count;
+          }
+      }
+      result=Drama_or_Action*100.0/total_rentals;
+sql_ref: |
+  select count(*) * 100.0
+   /
+   (
+   select count(*)
+   from rental join
+   inventory on rental.inventory_id=inventory.inventory_id join
+   film on film.film_id=inventory.film_id join
+   film_category on film_category.film_id=film.film_id join
+   category on category.category_id=film_category.category_id
+   )
+
+   from rental join
+   inventory on rental.inventory_id=inventory.inventory_id join
+   film on film.film_id=inventory.film_id join
+   film_category on film_category.film_id=film.film_id join
+   category on category.category_id=film_category.category_id
+   where
+   category.name = 'Drama' or category.name='Action'
+

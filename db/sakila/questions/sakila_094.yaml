@@ -1,0 +1,41 @@
+category: [extra,filter,aggregate]
+database: sakila
+question: Give me list of all costumers in Japan. The List should also contain the total revenue of the costumer.
+js_ref: |  
+   let films_with_actor=data.films.filter(
+      film => film.Actors.some(actor => actor.First_name == "OPRAH" && actor.Last_name=="KILMER")
+   ).map(film=>film.Title)
+   
+   var count_films=0;
+   var costumer_revenue={} 
+   data.customers.map((customer) => {
+      customer_id=customer.First_Name+ " " + customer.Last_Name 
+      if (customer.Country=='Japan')
+      {
+         customer.Rentals.map(rental=>{
+            {
+                  let revenue=rental.Payments.reduce((total,actual)=>{return total+actual.Amount},0.0)
+                  if (customer_id in  costumer_revenue)
+                     costumer_revenue[customer_id]=costumer_revenue[customer_id]+revenue
+                  else
+                      costumer_revenue[customer_id]=revenue
+            }
+         })
+      }
+   });
+   
+   let result = costumer_revenue;
+sql_ref: |
+  select 
+   max(concat(customer.first_name,' ',customer.last_name)) as customer_name,
+   sum(payment.amount) as revenue
+   from 
+   payment join
+   rental on payment.rental_id=rental.rental_id join
+   customer on customer.customer_id = rental.customer_id join
+   address on address.address_id=customer.address_id join 
+   city on city.city_id=address.city_id join 
+   country on country.country_id=city.country_id
+   where country.country='Japan'
+   group by customer.customer_id
+   

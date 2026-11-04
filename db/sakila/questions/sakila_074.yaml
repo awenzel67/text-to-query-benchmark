@@ -1,0 +1,87 @@
+category: [variant,aggregate,filter,projection,join,sqljoin,groupby,complex]
+database: sakila
+question: Which film generated the highest revenue in each category?
+
+js_ref: |  
+      let result={};
+      let film_cat={}
+      let film_title={}
+      data.films.map(film=>{
+         film_cat[film.filmId]=film.Category
+         film_title[film.filmId]=film.Title
+      })
+            data.customers.map(customer=>{
+               customer.Rentals.map(rental=>{
+                  let initialValue=0.0
+                  let amount=rental.Payments.reduce((accumulator, currentValue) => accumulator + currentValue.Amount,initialValue)
+                  let cat=""
+                  if (rental.filmId in film_cat)
+                  {
+                     cat=film_cat[rental.filmId]
+                  }
+                  if(cat>'')
+                  {
+                  if (!(cat in result))
+                  {
+                     result[cat]={}
+                  }
+
+                  if (!(rental.filmId in result[cat]))
+                        result[cat][rental.filmId]=0
+                  result[cat][rental.filmId]+=amount;
+                  }            
+               });
+            });
+            var res2={}
+            for (cat in result)
+            {
+               let amount_max=0;
+               let cat_film=[]
+               for (film in result[cat])
+               {
+                  amount=result[cat][film]
+                  title=film_title[film]
+                  if (amount>amount_max)
+                  {
+                        cat_film=[{"title":title,"amount":amount}]
+                        amount_max=amount
+                  }
+                  else if (amount>amount_max)
+                  {
+                     cat_film.push({"title":title,"amount":amount});
+                  }
+               }
+               res2[cat]=cat_film
+            }
+            result=res2
+           
+sql_ref: |
+      select a.cat_name,film_title,total_amount from
+      (
+      select film.film_id,  max(category.category_id) as cat_id,max(category.name) as cat_name, sum(payment.amount) as total_amount
+      from payment join
+      rental on rental.rental_id=payment.rental_id join
+      inventory on inventory.inventory_id= rental.inventory_id join
+      film on film.film_id=inventory.film_id join
+      film_category on film_category.film_id=film.film_id join
+      category on category.category_id=film_category.category_id
+      group by film.film_id
+      order by cat_name,total_amount desc
+      ) as a join (
+      select cat_id, cat_name,film_title,max(total_amount) as max_total_amount from
+      (
+      select film.film_id,  max(category.category_id) as cat_id,max(category.name) as cat_name,max(film.title) as film_title, sum(payment.amount) as total_amount
+      from payment join
+      rental on rental.rental_id=payment.rental_id join
+      inventory on inventory.inventory_id= rental.inventory_id join
+      film on film.film_id=inventory.film_id join
+      film_category on film_category.film_id=film.film_id join
+      category on category.category_id=film_category.category_id
+      group by film.film_id
+      order by cat_name,total_amount desc
+      )
+      group by cat_id,cat_name
+      ) as b
+
+      where a.cat_id=b.cat_id
+      and a.total_amount=b.max_total_amount

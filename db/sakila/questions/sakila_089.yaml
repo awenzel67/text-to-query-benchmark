@@ -1,0 +1,27 @@
+category: [extra,aggregate]
+database: sakila
+question: When was the first film rented out?
+js_ref: |  
+   var ru_first=''
+   data.customers.map((customer) => {
+      customer.Rentals.map(rental=>{
+          {
+              var rt=rental.Return_Date;
+              var ru=rental.Rental_Date;
+              if (ru_first=='')
+              { 
+                  ru_first=ru
+              }
+
+              if (ru_first > ru)
+              {
+                  ru_first=ru
+              }
+          }
+      })
+   });
+   result=ru_first;
+sql_ref: |
+   select min(rental.rental_date) from rental
+  
+   

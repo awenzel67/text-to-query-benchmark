@@ -1,0 +1,15 @@
+category: [extra,filter]
+database: sakila
+question: 'Give me a list of all films with rating: NC-17'
+js_ref: |
+      let result=data.films
+      .filter(film =>{
+          return film.Rating=='NC-17'
+      })
+      .map(film=>{
+            return film.Title
+      });       
+sql_ref: |
+   select title from film
+   where rating = 'NC-17'
+   

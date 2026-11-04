@@ -1,0 +1,24 @@
+category: [variant,aggegate]
+database: sakila
+question: What is the total number of available copies of films featuring 'MARY KEITEL' across all rental stores?
+js_ref: |  
+    let result=0;
+    let moviesWithActor = data.films.filter(film=>{
+       return film.Actors.some(actor => actor.First_name === 'MARY' && actor.Last_name === 'KEITEL');
+    }).map(film => film.filmId);
+
+    data.stores.map(store=>{
+       store.Inventory.map(inventory=>{
+          if (inventory.filmId && moviesWithActor.includes(inventory.filmId)) {
+             result += 1;
+          }
+       });
+    });
+            
+sql_ref: |
+   select count(*) as total_copies
+   from actor join
+   film_actor on actor.actor_id=film_actor.actor_id 
+   join inventory on inventory.film_id=film_actor.film_id
+   where
+   actor.first_name='MARY' and actor.last_name='KEITEL' 

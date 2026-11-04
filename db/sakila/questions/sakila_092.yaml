@@ -1,0 +1,16 @@
+category: [extra,filter]
+database: sakila
+question: Give me all films containing Behind the Scenes in special features.
+js_ref: |  
+      let result= data.films.filter(
+      film => film.Category=='Documentary' && film.Description.includes('Agent')
+      ).map(film=>film.Title)
+sql_ref: |
+    select title 
+      from film join
+      film_category on film_category.film_id=film.film_id join
+      category on category.category_id = film_category.category_id
+      where 
+      category.name='Documentary'
+      and film.description like '%Agent%'
+   

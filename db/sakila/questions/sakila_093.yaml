@@ -1,0 +1,52 @@
+category: [extra,filter]
+database: sakila
+question: How often films with OPRAH KILMER ar rented in July 2005?
+js_ref: |  
+  let films_with_actor=data.films.filter(
+      film => film.Actors.some(actor => actor.First_name == "OPRAH" && actor.Last_name=="KILMER")
+   ).map(film=>film.Title)
+   
+   var count_films=0;
+   data.customers.map((customer) => {
+      customer.Rentals.map(rental=>{
+          {
+              var film_title=rental.Film_Title;
+              var ru=rental.Rental_Date;
+              if ( ru>'')
+              { 
+                 let dfrom=new Date(ru);
+                 if ( 
+                 dfrom.getFullYear()==2005 
+                 && dfrom.getMonth()==6
+                 && 
+                films_with_actor.includes(rental.Film_Title)
+                 )
+                 {
+                  count_films+=1
+                 }
+              }
+          }
+      })
+   });
+   
+   let result = count_films;
+sql_ref: |
+   select count( *) 
+      from rental join
+      inventory on rental.inventory_id=inventory.inventory_id join 
+      film on film.film_id=inventory.film_id
+
+
+            where 
+            rental_date >= '2005-07-01 00:00:00.000'
+            and
+            rental_date < '2005-08-01 00:00:00.000'
+            
+      and exists(
+      select actor.actor_id 
+      from actor join
+      film_actor on actor.actor_id=film_actor.actor_id
+      where film_actor.film_id=film.film_id
+      and actor.first_name='OPRAH' and actor.last_name='KILMER' 
+      )
+   

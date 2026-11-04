@@ -1,0 +1,48 @@
+category: [extra,aggregate,join,complex]
+database: sakila
+question:  Give me the top five cities from customer address in regard to revenue.
+js_ref: |  
+ var count_films=0;
+   var costumer_revenue={} 
+   data.customers.map((customer) => {
+      {
+         customer.Rentals.map(rental=>{
+            {
+                  let staff_id=customer.City
+                  let revenue=rental.Payments.reduce((total,actual)=>{return total+actual.Amount},0.0)
+                  if (staff_id in  costumer_revenue)
+                     costumer_revenue[staff_id]=costumer_revenue[staff_id]+revenue
+                  else
+                      costumer_revenue[staff_id]=revenue
+            }
+         })
+      }
+   });
+
+   var city_revenue=[];
+   for (city in  costumer_revenue)
+   {
+     city_revenue.push(
+        {
+          "city": city,
+          "revenue": costumer_revenue[city]
+        }
+     )
+   }
+  
+   city_revenue.sort((a,b)=>b.revenue-a.revenue)
+
+   let result=city_revenue.splice(0,5).map(city_revenue=>city_revenue.city)
+sql_ref: |
+   select city from(
+   select city.city,sum(payment.amount) as revenue
+   from 
+   payment join 
+   rental on rental.rental_id=payment.rental_id join
+   customer on customer.customer_id=rental.customer_id join
+   address on address.address_id=customer.address_id join
+   city on city.city_id = address.city_id
+   group by city.city
+   order by  revenue desc
+   limit 5
+   )

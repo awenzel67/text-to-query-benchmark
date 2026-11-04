@@ -1,0 +1,20 @@
+category: [variant,filter,projection,sqljoin]
+database: sakila
+question: Show the names and home addresses of all current store managers.
+
+js_ref: |  
+      let result=data.stores.map(
+      store => {
+         return {
+            "manager":store.Manager_First_Name + " "+ store.Manager_Last_Name,
+            "address":store.Address
+         }
+      }
+      )     
+            
+sql_ref: |
+   select address.address,
+   concat(staff.first_name,' ',staff.last_name) as staff_name
+   from store join
+   address on store.address_id=address.address_id join
+   staff on staff.store_id=store.store_id

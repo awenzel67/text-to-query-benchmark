@@ -1,0 +1,12 @@
+category: [variant,aggregate]
+database: sakila
+question: What is the average number of days customers keep rented videos before returning them?
+js_ref: |  
+    let numbers=data.films.map(film=>{
+          return film.Rental_Duration;
+       }
+    );
+    const sum = numbers.reduce((acc, num) => acc + num, 0);
+    let result=sum / numbers.length;
+sql_ref: |
+    select avg(rental_duration) from film;    

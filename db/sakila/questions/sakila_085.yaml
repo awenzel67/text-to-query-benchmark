@@ -1,0 +1,30 @@
+category: [extra,filter,projection]
+database: sakila
+question: What is the average rental duration for the films?
+js_ref: |  
+   var sum_days=0.0;
+   var count=0;
+   data.customers.map((customer) => {
+      customer.Rentals.map(rental=>{
+          {
+              var rt=rental.Return_Date;
+              var ru=rental.Rental_Date;
+              if (rt>'' && ru>'')
+              { 
+                 let dfrom=new Date(ru);
+                 let dto=new Date(rt);
+                 var days= (dto.getTime() - dfrom.getTime()) / 1000/60.0/60.0/24.0;
+                 if (days>0.0)
+                 {
+                     sum_days+=days;
+                     count+=1;
+                 }
+              }
+          }
+      })
+   });
+   result=sum_days/count;
+            
+sql_ref: |
+   select avg( JulianDay(return_date)- JulianDay(rental_date)) from rental
+   where not return_date is null;

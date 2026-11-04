@@ -1,0 +1,39 @@
+category: [extra,aggregate,sqljoin]
+database: sakila
+question: I will see if there is a correlation between the number of rental of a film and the length of a film. Give me a table with the number of rentals and film duration.
+js_ref: |
+      let result=[];
+      let filmCountRental=new Map();
+      let filmName=new Map();
+      data.customers.map(customer=>{
+         customer.Rentals.map(rental=>{
+            if (rental.filmId) {
+               if (!(rental.filmId in filmCountRental)) {
+                  filmCountRental[rental.filmId]=0;
+               }
+               filmCountRental[rental.filmId]+=1;
+               filmName[rental.filmId]=rental.Film_Title;
+            }
+         });
+      });
+      duration_films=new Map();
+      data.films.map(film=>{
+            duration_films[film.filmId]=film.Length
+      });
+      for (const filmId in filmCountRental) {
+
+            result.push({
+            "film_length":filmCountRental[filmId], 
+            "rental_count":duration_films[filmId]});
+      }
+sql_ref: |
+  select 
+  Length ,
+  (select count(*) 
+  from rental join
+  inventory on rental.inventory_id=inventory.inventory_id
+  where 
+  film.film_id=inventory.film_id
+  ) as count_rentals
+  from 
+  film;

@@ -1,0 +1,24 @@
+category: [extra,aggregate,filter,sqljoin]
+database: sakila
+question: How many customers live in Japan?
+js_ref: |
+    let result={}    
+    data.customers
+    .filter(costumer=> costumer.Country=='Japan')
+    .map(costumer=>{
+       if (costumer.Country in result)
+       {
+            result[costumer.Country]=result[costumer.Country]+1;
+       }
+       else
+       {
+            result[costumer.Country]=1;
+       }
+    });
+    if ('Japan' in result)
+      result=result['Japan']
+    else
+      result=null;
+sql_ref: |
+     select count(*) as costumers from customer join address on customer.address_id=address.address_id join city on address.city_id=city.city_id join country on country.country_id=city.country_id
+     where country.country = 'Japan'

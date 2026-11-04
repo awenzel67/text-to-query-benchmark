@@ -1,0 +1,41 @@
+category: [extra,filter,projection]
+database: sakila
+question:  Do people tend to return your films before 12 o'clock or after 12 o'clock?
+js_ref: |  
+   var total_before_12=0;
+   var total_after_12=0;
+   let midday=1000 * 60 * 60 * 12
+   data.customers.map((customer) => {
+      customer.Rentals.map(rental=>{
+          {
+              var rt=rental.Return_Date;
+              var ru=rental.Rental_Date;
+              if (rt>'' && ru>'')
+              { 
+                 let dto=new Date(rt);
+                 var mill= dto.getTime() % (1000 * 60 * 60 * 24);
+                 if (mill<midday)
+                 {
+                    total_before_12+=1
+                 }
+                 else
+                 {  
+                    total_after_12+=1
+                 }
+              }
+          }
+      })
+   });
+   result=total_after_12*1.0/(total_before_12+total_after_12);
+
+sql_ref: |
+   select (
+   select count(*) from rental
+   where not return_date is null 
+   and JulianDay(return_date)-Cast(JulianDay(return_date) as Integer)*1.0 >= 0.5
+   )*1.0/
+   (
+   select count(*) from rental
+   where not return_date is null 
+   ) as portion_afternoon  
+   

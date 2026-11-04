@@ -1,0 +1,59 @@
+category: [extra,aggregate,complex]
+database: sakila
+question: Which customer brought in the most revenue?
+js_ref: |
+    let result={};    
+     data.customers.map(customer=>{
+       let customer_name=customer.First_Name+ " " + customer.Last_Name;
+       customer.Rentals.map(
+          rental => {
+             rental.Payments.map( payment =>{
+             //if (payment.Payment_Date>='2006-01-01 00:00:00.0' && payment.Payment_Date < '2007-01-01 00:00:00.0')
+             {
+                 if (customer_name in result)
+                 {
+                     result[customer_name]=result[customer_name]+payment.Amount;
+                 }
+                 else
+                 {
+                    result[customer_name]=payment.Amount;
+                 }
+             }
+             })
+          })
+    });  
+
+    ret=[]
+    max_amount=0;
+    for (var name in result)
+    {
+        let val=result[name];
+        if (val>max_amount)
+        {
+            ret=[name]
+            max_amount=val;
+        }
+        else if (val==max_amount)
+        {
+          ret.push(name);
+        }
+    }
+    result=ret; 
+sql_ref: |
+     select 
+      (select CONCAT(first_name,' ',last_name) from customer b where  b.customer_id=cuid ) as customer_name,
+      payed_amount
+      from 
+      (select customer.customer_id as cuid, sum(payment.amount) as payed_amount
+      from payment join
+      customer on customer.customer_id=payment.customer_id
+      group by customer.customer_id)
+      where 
+      payed_amount =(
+      select max(payed_amount)
+      from 
+      (select customer.customer_id, sum(payment.amount) as payed_amount
+      from payment join
+      customer on customer.customer_id=payment.customer_id
+      group by customer.customer_id)
+      )

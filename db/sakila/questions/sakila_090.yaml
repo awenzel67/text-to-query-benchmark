@@ -1,0 +1,56 @@
+category: [extra,aggregate,projection,filter]
+database: sakila
+question: Which 5 films were rented for the longest time on average?
+js_ref: |  
+   var max_time=0.0;
+   var films={}
+   data.customers.map((customer) => {
+      customer.Rentals.map(rental=>{
+          {
+              var film_title=rental.Film_Title;
+              var rt=rental.Return_Date;
+              var ru=rental.Rental_Date;
+              if (rt>'' && ru>'')
+              { 
+                 let dfrom=new Date(ru);
+                 let dto=new Date(rt);
+                 var days= (dto.getTime() - dfrom.getTime()) / 1000/60.0/60.0/24.0;
+                 if ( ! (film_title in films))
+                     films[film_title]=[]
+                if (film_title in films)
+                 films[film_title].push(days);
+              }
+          }
+      })
+   });
+   var result=[];
+   for (film in films)
+   {
+       let durations=films[film];
+       let avg_dur=durations.reduce((prev, current) => prev + current) / durations.length;
+       result.push({
+             "title":film,
+             "avg_rent_duration": avg_dur
+       })
+   }
+   result.sort((a,b)=> b.avg_rent_duration-a.avg_rent_duration);
+   result=result.slice(0,5)
+   result=result.map(val=>val.title)
+sql_ref: |
+   select title
+    from
+    (
+    select film.title, 
+    avg(JulianDay(return_date)- JulianDay(rental_date)) as rental_duration
+    from rental join
+    inventory on inventory.inventory_id=rental.inventory_id join
+    film on inventory.film_id=film.film_id
+    
+    where not return_date is null
+
+    group by film.title   
+    order by rental_duration desc
+    limit 5
+    )
+  
+   

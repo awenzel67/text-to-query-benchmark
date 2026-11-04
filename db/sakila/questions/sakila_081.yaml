@@ -1,0 +1,27 @@
+category: [extra,filter]
+database: sakila
+question: How many films returned at 2005-06-15?
+js_ref: |
+      var count_films=0;
+      data.customers
+      .map(film=>{
+           for (var rental of film.Rentals)
+           {
+               if ( 
+                rental.Return_Date>= "2005-06-15 00:00:00.0"
+                &&
+                rental.Return_Date< "2005-06-16 00:00:00.0"
+               )
+               {
+                  count_films+=1
+               }
+           } 
+      });
+      let result=count_films;          
+sql_ref: |
+      select  * from rental
+      where 
+      return_date >= '2005-06-15 00:00:00.000'
+      and
+      return_date < '2005-06-16 00:00:00.000'
+   

@@ -1,0 +1,7 @@
+category: [variant,aggregate]
+database: sakila
+question: Count the number of films listed in the database.
+js_ref: |
+    let result=data.films.length;
+sql_ref: |
+    select count(*) from film;    

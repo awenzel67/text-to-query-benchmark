@@ -1,0 +1,17 @@
+category: [extra,aggregate,join,complex]
+database: sakila
+question: In wich cities we have customers?
+js_ref: |  
+   var cities={}
+   data.customers.map((customer) => {
+      cities[customer.City]=1
+   });
+   let result=Object.keys(cities);
+sql_ref: |
+   select 
+   distinct city.city
+   from 
+   customer join 
+   address on customer.address_id==address.address_id join
+   city on city.city_id=address.city_id
+  

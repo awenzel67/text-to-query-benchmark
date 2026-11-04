@@ -1,0 +1,69 @@
+category: [extra,aggregate,join,complex]
+database: sakila
+question: Wich staff memeber is responsible for the largest revenue?
+js_ref: |  
+   var count_films=0;
+   var costumer_revenue={} 
+   data.customers.map((customer) => {
+      {
+         customer.Rentals.map(rental=>{
+            {
+                  let staff_id=rental.staffId
+                  let revenue=rental.Payments.reduce((total,actual)=>{return total+actual.Amount},0.0)
+                  if (staff_id in  costumer_revenue)
+                     costumer_revenue[staff_id]=costumer_revenue[staff_id]+revenue
+                  else
+                      costumer_revenue[staff_id]=revenue
+            }
+         })
+      }
+   });
+   var staff_name={}
+   data.stores.map((store) => {
+            store.Staff.map(staff=>{
+                     let staff_id=staff.staffId;
+                     staff_name[staff_id]=staff.First_Name + ' ' + staff.Last_Name
+            })
+   });
+    
+   let result = [];
+   let max_revenue=0;
+   for ( id in costumer_revenue  )
+   {
+       let revenue=costumer_revenue[id];
+       let name = staff_name[id]
+       if (revenue > max_revenue)
+       {
+         result=[name];
+         max_revenue=revenue;
+       }
+       else if (revenue == max_revenue)
+       {
+           result.push(name)
+       }
+   }
+sql_ref: |
+ select customer_name
+   from (
+   select 
+   max(concat(staff.first_name,' ',staff.last_name)) as customer_name,
+   sum(payment.amount) as revenue
+   from 
+   payment join
+   rental on payment.rental_id=rental.rental_id join
+   staff on rental.staff_id = staff.staff_id 
+   group by staff.staff_id
+   )
+   where revenue=
+   (
+   select 
+   sum(payment.amount) as revenue
+   from 
+   payment join
+   rental on payment.rental_id=rental.rental_id join
+   staff on rental.staff_id = staff.staff_id 
+   group by staff.staff_id
+   order by revenue desc
+   limit 1
+   )
+   

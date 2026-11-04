@@ -1,0 +1,28 @@
+category: [extra,aggregate,join,complex]
+database: sakila
+question: Wich staff memeber is responsible for the largest revenue?
+js_ref: |  
+   var result=[]
+   data.stores.map((store) => {
+            let manager = store.Manager_First_Name + " "+store.Manager_Last_Name
+            store.Staff.map(staff=>{
+                     staff_name=staff.First_Name + ' ' + staff.Last_Name;
+                     result.push(
+                       {
+                          "manager":manager,
+                          "staff":staff_name
+                       }
+                     )
+            })
+   });
+sql_ref: |
+   select 
+   (
+   select concat(staffm.first_name, ' ', staffm.last_name) 
+   from staff as staffm 
+   where staffm.staff_id=store.manager_staff_id
+   ) as manager_name,
+   concat(staff.first_name, ' ', staff.last_name) as staff_name
+   from 
+   store join
+   staff on staff.store_id=store.store_id

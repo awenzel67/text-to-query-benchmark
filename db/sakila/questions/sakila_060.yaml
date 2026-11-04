@@ -1,0 +1,20 @@
+category: [variant,select,jsdistinct]
+database: sakila
+question: Which actors (full name) have been credited in the films stored in the database?
+js_ref: |  
+    let result={};    
+    let names=[]
+    data.films.map(film=>{
+       film.Actors.map(
+          actor => {
+               name=`${actor.First_name} ${actor.Last_name}`
+               if (! (name in result))
+               {
+                   result[name]=1;
+                   names.push(name);
+               }
+          })
+    }); 
+    result=names;  
+sql_ref: |
+    select distinct concat( first_name,' ', last_name) as full_name from actor   
