@@ -1,4 +1,4 @@
-category: [none,aggregate,groupby]
+category: [none,notoolcall]
 database: sakila
 question: I need a table with the mean number of horses per week day.
 js_ref:     

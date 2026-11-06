@@ -1,8 +1,84 @@
-category: [aggregate,groupby,orderby,limit,join,sqljoin,complex]
+category: [none,aggregate,limit,join,sqljoin,complex]
 database: sakila
 question: Movies of which actor respective actors are rented most from custumers from city Birkenwerder?
 js_ref: |  
-   let result=[];    
+   let result=[];
+   var films=[];
+   var film_actor={};
+         data.customers.map(customer=>{
+            if (customer.City!='Birkenwerder') return
+            customer.Rentals.map(rental=>{
+               films.push(rental.filmId)
+            });
+         });
+         data.films.map(film=>{
+            if (films.includes(film.filmId))
+            {
+               film_actor[film.filmId]=film.Actors;
+            }
+         });
+      
+      var actors_count={};
+      for (var filmId of films)
+      {
+            if (! (filmId.toString() in film_actor)) continue;
+
+               var actors=film_actor[filmId.toString()];
+               actors.map(actor=>{
+                  let actor_name=actor.First_name+" "+actor.Last_name;
+                  if (! (actor_name in actors_count)){
+                     actors_count[actor_name]=0;
+               }
+               actors_count[actor_name]=actors_count[actor_name]+1;
+               //actor_names.push(actor_name);
+            });
+            
+      }
+      
+      result=[]
+      max_count=0;
+      for (actor_name in actors_count)
+      {
+            if (actors_count[actor_name]>max_count)
+            {
+               max_count=actors_count[actor_name];
+               result=[actor_name];
+            }
+            else if (actors_count[actor_name]==max_count)
+            {
+               result.push(actor_name);
+            }
+      } 
 sql_ref: |
-   select select title from film where 
-   title = 'In Birkenwerder';
+   select * from(
+   select concat(actor.first_name,' ',actor.last_name) as actor_name, count(*) as total
+   from 
+   rental join
+   customer on rental.customer_id=customer.customer_id join
+   address on address.address_id=customer.address_id join
+   city on address.city_id=city.city_id join
+   inventory on rental.inventory_id=inventory.inventory_id join
+   film on film.film_id=inventory.film_id join 
+   film_actor on film.film_id=film_actor.film_id join
+   actor on actor.actor_id=film_actor.actor_id
+   where city.city='Birkenwerder' 
+   group by actor_name
+   )
+
+   where total=
+   (
+   select max(total) from(
+   select concat(actor.first_name,' ',actor.last_name) as actor_name, count(*) as total
+   from 
+   rental join
+   customer on rental.customer_id=customer.customer_id join
+   address on address.address_id=customer.address_id join
+   city on address.city_id=city.city_id join
+   inventory on rental.inventory_id=inventory.inventory_id join
+   film on film.film_id=inventory.film_id join 
+   film_actor on film.film_id=film_actor.film_id join
+   actor on actor.actor_id=film_actor.actor_id
+   where city.city='Birkenwerden' 
+   group by actor_name
+   )
+   )

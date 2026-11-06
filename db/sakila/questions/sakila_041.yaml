@@ -1,6 +1,6 @@
 category: [none,aggregate,groupby,sqljoin]
 database: sakila
-question: Give me the anaual revenues auf movie 'YENTL BERLIN'.
+question: Give me the anaual revenues of movie 'YENTL BERLIN'.
 js_ref: |  
       let result={};
       data.customers.map(customer=>{
