@@ -1,6 +1,6 @@
 category: [none,filter,sqljoin]
 database: sakila
-question: Has the customer ANDREAS MORRIS brought back all movies?
+question: Which movies has the customer Andreas Morris not returned?
 
 js_ref: |  
       let result=[]
