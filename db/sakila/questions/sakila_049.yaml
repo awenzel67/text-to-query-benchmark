@@ -1,6 +1,6 @@
 category: [none,aggregate,filter,projection,join,sqljoin,groupby,complex]
 database: sakila
-question: What is the best selling film in every film category new adult?
+question: What is the best-selling film in the New Adult category?
 
 js_ref: |  
       let result={};
@@ -32,7 +32,7 @@ js_ref: |
                   }            
                });
             });
-            var res2={}
+            var res2={"New Adult":[]}
             for (cat in result)
             {
                let amount_max=0;
@@ -51,12 +51,12 @@ js_ref: |
                      cat_film.push({"title":title,"amount":amount});
                   }
                }
-               if (cat=='new adault')
+               if (cat=='New Adult')
                {
                 res2[cat]=cat_film
                }
             }
-            result=res2   
+            result=res2['New Adult'].map(film=>film.title) 
            
 sql_ref: |
       select a.cat_name,film_title,total_amount from
