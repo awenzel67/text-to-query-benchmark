@@ -1,6 +1,6 @@
 category: [variant,aggregate,groupby,sqljoin]
 database: sakila
-question: What is the number of films stocked at each rental store address?
+question: How many total copies of movies are in inventory per store address?
 js_ref: |
     let result={};
     data.stores.map(store=>{
