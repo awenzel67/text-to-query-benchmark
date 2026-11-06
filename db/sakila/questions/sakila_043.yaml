@@ -1,6 +1,6 @@
 category: [none,aggregate,groupby,complex]
 database: sakila
-question: I need a table with the mean number of custumers and mean revenue per month in year 2024.
+question: I need a table showing the monthly customer count and revenue for 2024.
 
 js_ref: |  
       let result={};
