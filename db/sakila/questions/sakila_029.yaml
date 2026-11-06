@@ -1,4 +1,4 @@
-category: [none,aggregate,groupby,sqljoin]
+category: [none,aggregate,sqljoin]
 database: sakila
 question: How many films are in the inventory at adresses 'Dietzgenstraße 46'?
 js_ref: |
