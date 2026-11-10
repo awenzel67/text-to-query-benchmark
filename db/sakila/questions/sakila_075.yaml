@@ -1,6 +1,6 @@
 category: [variant,filter,projection]
 database: sakila
-question: List the store affiliation for every staff member.
+question: List the store affiliation for every staff member identified by their full name (first name and last name).
 
 js_ref: |  
     let result=[];
@@ -9,14 +9,14 @@ js_ref: |
            result.push(
            {
                "store":store.Address, 
-               "staff": staff.First_Name + " "+staff.Last_Name
+               "name": staff.First_Name + " "+staff.Last_Name
            }
            )
        )
     )  
             
 sql_ref: |
-   select concat(first_name,' ',last_name) as staff_name,
+   select concat(first_name,' ',last_name) as name,
    address.address
    from  staff join
    store on store.store_id=staff.store_id join
