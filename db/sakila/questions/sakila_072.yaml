@@ -1,6 +1,6 @@
 category: [variant,filter,projection,sqljoin]
 database: sakila
-question: Show the names (first and last) and home addresses of all current store managers.
+question: Show the full names (first and last) and home addresses of all current store managers.
 
 js_ref: |  
       let result=data.stores.map(
