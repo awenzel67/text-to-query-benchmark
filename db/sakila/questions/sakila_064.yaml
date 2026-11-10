@@ -1,4 +1,4 @@
-category: [variant,aggregate,groupby,orderby,limit,sqljoin]
+category: [variant,aggregate,orderby,limit,sqljoin]
 database: sakila
 question: Generate a ranking of the five most profitable films in the database, ordered by total revenue.
 js_ref: |  
