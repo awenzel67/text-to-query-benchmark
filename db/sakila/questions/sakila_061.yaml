@@ -1,6 +1,6 @@
 category: [variant,filter,projection]
 database: sakila
-question: List all customers who checked out the film titled 'CLOSER BANG'.
+question: List all customers (full name) who checked out the film titled 'CLOSER BANG'.
 js_ref: |  
     let result={};    
     let names=[];
