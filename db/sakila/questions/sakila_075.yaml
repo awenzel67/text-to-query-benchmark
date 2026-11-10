@@ -1,6 +1,6 @@
 category: [variant,filter,projection]
 database: sakila
-question: List the store affiliation for every staff member identified by their full name (first name and last name).
+question: List the store affiliation for every staff member (use their full name).
 
 js_ref: |  
     let result=[];
