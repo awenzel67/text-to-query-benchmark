@@ -1,6 +1,6 @@
 category: [filter,projection,sqljoin]
 database: sakila
-question: Wich film is available most in the stores?
+question: Which films are available most in the stores?
 
 js_ref: |  
       let result=[]
@@ -28,12 +28,12 @@ js_ref: |
          title=filmTitle[idFilm]
          if(count>maxCount)
          {
-            result=[{"title":title,"count":count}]
+            result=[title]
             maxCount=count;
          }
          else if(count==maxCount)
          {
-            result.push({"title":title,"count":count})
+            result.push(title)
             maxCount=count;
          }
       }
