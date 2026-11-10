@@ -1,4 +1,4 @@
-category: [aggregate,groupby,orderby,limit,sqljoin]
+category: [aggregate,orderby,limit,sqljoin]
 database: sakila
 question: Create a ranking of the top five selling films based on revenue.
 js_ref: |  
@@ -22,6 +22,7 @@ js_ref: |
       }
       result.sort((a,b) => (a.revenue < b.revenue) ? 1 : ((b.revenue < a.revenue) ? -1 : 0))
       result=result.slice(0,5);
+      result = result.map(item=>item.name);
             
 sql_ref: |
    select  film.title, sum(amount) as total_amount
