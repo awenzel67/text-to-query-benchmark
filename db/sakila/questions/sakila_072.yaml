@@ -6,7 +6,7 @@ js_ref: |
       let result=data.stores.map(
       store => {
          return {
-            "manager":store.Manager_First_Name + " "+ store.Manager_Last_Name,
+            "name":store.Manager_First_Name + " "+ store.Manager_Last_Name,
             "address":store.Address
          }
       }
@@ -14,7 +14,7 @@ js_ref: |
             
 sql_ref: |
    select address.address,
-   concat(staff.first_name,' ',staff.last_name) as staff_name
+   concat(staff.first_name,' ',staff.last_name) as name
    from store join
    address on store.address_id=address.address_id join
    staff on staff.store_id=store.store_id
