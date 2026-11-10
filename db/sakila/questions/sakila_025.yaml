@@ -1,6 +1,6 @@
 category: [filter,projection]
 database: sakila
-question: Which staff member (by full name) belongs to which store?
+question: Which staff member (use full name) belongs to which store (use address)?
 
 js_ref: |  
     let result=[];
