@@ -1,6 +1,6 @@
 category: [variant,filter,projection,sqljoin]
 database: sakila
-question: Which movie has the highest number of copies across all store locations?
+question: Which movies have the highest number of copies across all store locations?
 js_ref: |  
       let result=[]
       let filmCount={}
@@ -27,12 +27,12 @@ js_ref: |
          title=filmTitle[idFilm]
          if(count>maxCount)
          {
-            result=[{"title":title,"count":count}]
+            result=[title]
             maxCount=count;
          }
          else if(count==maxCount)
          {
-            result.push({"title":title,"count":count})
+            result.push(title)
             maxCount=count;
          }
       }
