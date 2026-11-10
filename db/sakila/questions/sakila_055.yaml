@@ -1,6 +1,6 @@
 category: [variant,aggregate]
 database: sakila
-question: What is the average number of days customers keep rented videos before returning them?
+question: What is the average length of a rental period?
 js_ref: |  
     let numbers=data.films.map(film=>{
           return film.Rental_Duration;
