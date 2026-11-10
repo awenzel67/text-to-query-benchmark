@@ -1,6 +1,6 @@
 category: [filter,projection]
 database: sakila
-question: Wich staff member belongs to wich store?
+question: Which staff member (by full name) belongs to which store?
 
 js_ref: |  
     let result=[];
@@ -9,14 +9,14 @@ js_ref: |
            result.push(
            {
                "store":store.Address, 
-               "staff": staff.First_Name + " "+staff.Last_Name
+               "name": staff.First_Name + " "+staff.Last_Name
            }
            )
        )
     )  
             
 sql_ref: |
-   select concat(first_name,' ',last_name) as staff_name,
+   select concat(first_name,' ',last_name) as name,
    address.address
    from  staff join
    store on store.store_id=staff.store_id join
