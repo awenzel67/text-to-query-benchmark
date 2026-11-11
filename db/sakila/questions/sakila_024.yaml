@@ -43,20 +43,31 @@ js_ref: |
                   title=film_title[film]
                   if (amount>amount_max)
                   {
-                        cat_film=[{"title":title,"amount":amount}]
+                        cat_film=[title]
                         amount_max=amount
                   }
                   else if (amount>amount_max)
                   {
-                     cat_film.push({"title":title,"amount":amount});
+                     cat_film.push(title);
                   }
                }
                res2[cat]=cat_film
             }
+           
+            for (cat in res2){
+                val=res2[cat]
+                if (val.length==1)
+                {
+                    res2[cat]=val[0]
+                }
+            }
+
             result=res2
+
+     
            
 sql_ref: |
-      select a.cat_name,film_title,total_amount from
+      select a.cat_name,film_title from
       (
       select film.film_id,  max(category.category_id) as cat_id,max(category.name) as cat_name, sum(payment.amount) as total_amount
       from payment join
