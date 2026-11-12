@@ -1,4 +1,4 @@
-category: [extra,aggregate,join,complex]
+category: [extra,aggregate,sqljoin]
 database: sakila
 question: 'What is the total revenue of film: SATURDAY LAMBS?'
 js_ref: |  
@@ -15,6 +15,7 @@ js_ref: |
          })
       }
    });
+   result=revenue;
 sql_ref: |
    select sum(payment.amount) as revenue
    from 
