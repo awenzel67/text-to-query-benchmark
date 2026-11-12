@@ -1,6 +1,6 @@
 category: [extra,filter]
 database: sakila
-question: Give me all films containing Behind the Scenes in special features.
+question: Is there a film in category Documentary about an Agent?
 js_ref: |  
       let result= data.films.filter(
       film => film.Category=='Documentary' && film.Description.includes('Agent')
