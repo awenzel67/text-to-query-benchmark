@@ -1,4 +1,4 @@
-category: [extra,filter,aggregate]
+category: [extra,filter,aggregate,groupby]
 database: sakila
 question: Give me list of all costumers (use full name) in Japan. The List should also contain the total revenue of the costumer.
 js_ref: |  
