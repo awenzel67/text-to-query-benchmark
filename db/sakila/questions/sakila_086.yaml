@@ -9,28 +9,29 @@ js_ref: |
           {
               var rt=rental.Return_Date;
               var ru=rental.Rental_Date;
+              count+=1;
               if (rt>'' && ru>'')
               { 
                  let dfrom=new Date(ru);
+                 dfrom.setHours(0,0,0,0)
                  let dto=new Date(rt);
-                 var days= (dto.getTime() - dfrom.getTime()) / 1000/60.0/60.0/24.0;
-                 if (days>0.0)
+                 dto.setHours(0,0,0,0)
+                 var days= (dto.getTime() - dfrom.getTime()) / 1000/60/60/24;
+                 if (days==1)
                  {
                      sum_days+=days;
-                     count+=1;
                  }
               }
           }
       })
    });
-   result=sum_days/count;
+   result=sum_days*100.0/count;
             
 sql_ref: |
    select 
    (select count(*) from rental
    where not return_date is null
-   and (cast(JulianDay(return_date) as Integer)- CAST(JulianDay(rental_date) as Integer)) < 2
-   )*1.0/
+   and (cast(JulianDay(return_date) as Integer)- CAST(JulianDay(rental_date) as Integer)) =1
+   )*100.0/
    (select count(*) from rental
-   where not return_date is null
    );
