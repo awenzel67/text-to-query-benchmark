@@ -10,11 +10,11 @@ js_ref: |
           {
               var rt=rental.Return_Date;
               var ru=rental.Rental_Date;
-              if (rt>'' && ru>'')
+              if ( ru>'')
               { 
-                 let dto=new Date(rt);
-                 var mill= dto.getTime() % (1000 * 60 * 60 * 24);
-                 if (mill<midday)
+                 let dto=new Date(ru);
+                 var hours= dto.getHours()
+                 if (hours<12.0)
                  {
                     total_before_12+=1
                  }
@@ -31,11 +31,10 @@ js_ref: |
 sql_ref: |
    select (
    select count(*) from rental
-   where not return_date is null 
-   and JulianDay(return_date)-Cast(JulianDay(return_date) as Integer)*1.0 >= 0.5
+   where not rental_date is null 
+   and time(rental_date)>time('12:00:00')
    )*100.0/
    (
    select count(*) from rental
-   where not return_date is null 
-   ) as portion_afternoon  
-   
+   where not rental_date is null 
+   ) as portion_afternoon 
