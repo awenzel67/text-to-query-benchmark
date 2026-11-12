@@ -1,6 +1,6 @@
 category: [extra,aggregate,sqljoin]
 database: sakila
-question: Wich is the most expensive film.
+question: Wich are the most expensive films.
 js_ref: |
   var result=[]
   var result_films=[]
