@@ -1,6 +1,6 @@
 category: [extra,aggregate,sqljoin]
 database: sakila
-question: I will see if there is a correlation between the number of rental of a film and the length of a film. Give me a table with the number of rentals and film duration.
+question: Give me a table with the number of rentals and film duration for each film.
 js_ref: |
       let result=[];
       let filmCountRental=new Map();
