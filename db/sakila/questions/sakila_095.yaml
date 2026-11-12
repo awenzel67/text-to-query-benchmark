@@ -1,6 +1,6 @@
 category: [extra,aggregate,join,complex]
 database: sakila
-question: Wich staff memeber is responsible for the largest revenue?
+question: Wich staff memeber (use full name) is responsible for the largest revenue?
 js_ref: |  
    var count_films=0;
    var costumer_revenue={} 
