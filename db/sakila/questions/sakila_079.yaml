@@ -1,4 +1,4 @@
-category: [extra,filter,aggregate,groupby,sqljoin,complex]
+category: [extra,filter,aggregate,sqljoin,complex]
 database: sakila
 question: How many rentals in % belong to films of category Drama or Action?
 js_ref: |
