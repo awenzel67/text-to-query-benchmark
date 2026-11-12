@@ -1,6 +1,6 @@
 category: [extra,aggregate,join,complex]
 database: sakila
-question: 'Which customers rented film: JEEPERS WEDDING'
+question: 'Which customers (use full name) rented film: JEEPERS WEDDING'
 js_ref: |  
    var revenue=0.0;
    var customers_m={}
