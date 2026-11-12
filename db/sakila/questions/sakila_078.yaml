@@ -20,11 +20,19 @@ js_ref: |
       data.films.map(film=>{
             duration_films[film.filmId]=film.Length
       });
-      for (const filmId in filmCountRental) {
-
+      for (const filmId in duration_films) {
+            var count=0;
+            if (filmId in filmCountRental)
+            {
+               count=filmCountRental[filmId]
+            }
+            else
+            {
+               count=0;
+            }
             result.push({
-            "length":filmCountRental[filmId], 
-            "count":duration_films[filmId]});
+            "length":duration_films[filmId], 
+            "count":count});
       }
 sql_ref: |
   select 
