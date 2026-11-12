@@ -23,8 +23,8 @@ js_ref: |
       for (const filmId in filmCountRental) {
 
             result.push({
-            "film_length":filmCountRental[filmId], 
-            "rental_count":duration_films[filmId]});
+            "length":filmCountRental[filmId], 
+            "count":duration_films[filmId]});
       }
 sql_ref: |
   select 
@@ -34,6 +34,6 @@ sql_ref: |
   inventory on rental.inventory_id=inventory.inventory_id
   where 
   film.film_id=inventory.film_id
-  ) as count_rentals
+  ) as count
   from 
   film;
