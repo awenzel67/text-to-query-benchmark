@@ -1,6 +1,6 @@
 category: [extra,filter,aggregate]
 database: sakila
-question: Give me list of all costumers in Japan. The List should also contain the total revenue of the costumer.
+question: Give me list of all costumers (use full name) in Japan. The List should also contain the total revenue of the costumer.
 js_ref: |  
    let films_with_actor=data.films.filter(
       film => film.Actors.some(actor => actor.First_name == "OPRAH" && actor.Last_name=="KILMER")
