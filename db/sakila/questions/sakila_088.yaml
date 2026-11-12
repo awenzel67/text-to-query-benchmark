@@ -1,6 +1,6 @@
 category: [extra,filter,projection]
 database: sakila
-question:  Do people tend to return your films before 12 o'clock or after 12 o'clock?
+question:  What is the proportion (as a percentage) of film rentals occurring at or after 12 p.m.?
 js_ref: |  
    var total_before_12=0;
    var total_after_12=0;
