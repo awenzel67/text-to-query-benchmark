@@ -1,6 +1,6 @@
 category: [extra,aggregate,sqljoin]
 database: sakila
-question: Wich are the most expensive films.
+question: What are all films with the most expensive replacement cost?
 js_ref: |
   var result=[]
   var result_films=[]
