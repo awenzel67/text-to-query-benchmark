@@ -1,6 +1,6 @@
 category: [extra,aggregate,join,complex]
 database: sakila
-question: Wich staff memeber is responsible for the largest revenue?
+question: I need a table with all managers (use full name) an their assiciated staff members (use full name).
 js_ref: |  
    var result=[]
    data.stores.map((store) => {
