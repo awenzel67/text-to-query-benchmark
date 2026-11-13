@@ -1,21 +1,46 @@
-category: [aggregate,groupby]
+category: [aggregate,groupby,complex]
 database: sakila
-question: I need a table with the mean number of custumers per week day.
+question: I need a table with the mean number of rentals per week day.
 js_ref: |  
       var weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let result={};
+      var date_costumers={}
+      var dc2={}
       data.customers.map(customer=>{
          customer.Rentals.map(rental=>{
             let date = new Date(rental.Rental_Date);
-            let week_day=date.getDay();
-            let week_day_name=weekdayNames[week_day]
-            if (!(week_day in result)) {
-               result[week_day_name]=0;  
+            date.setHours(0,0,0,0)
+            if (!(date in date_costumers)) {
+               date_costumers[date]=0;  
             }
-            result[week_day_name]+=1;
+            date_costumers[date]+=1;
          });
       });
+
+      
+      for (const d in date_costumers)
+      {
+             
+            let date = new Date(d);
+            let nco=  date_costumers[d]
+            date.setHours(0,0,0,0)
+            let week_day=date.getDay();
+            let week_day_name=weekdayNames[week_day]
+            if (!(week_day_name in result)) {
+               result[week_day_name]=[];  
+            }
+            result[week_day_name].push(nco);
+      }
+
+
+      for (const d in result){
+               result[d] = result[d].reduce((sum, num) => sum + num, 0) / result[d].length; 
+      }
             
 sql_ref: |
-   select STRFTIME('%w', rental.rental_date) as weekday, count(*) total_rent from rental
-   group by STRFTIME('%w', rental.rental_date)
+   select weekday,avg(total_rent)
+   from (
+   select date(rental_date) as date, STRFTIME('%w', rental.rental_date) as weekday, count(*) as total_rent from rental
+   group by date(rental_date)
+   )
+   group by weekday
