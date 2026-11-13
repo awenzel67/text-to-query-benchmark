@@ -10,11 +10,11 @@ js_ref: |
             let date = new Date(rental.Rental_Date);
             let month_year=date.getMonth();
             if (!(month_year in result)) {
-               result[month_year]={"rentals":0,"revenue":0,"month":monthNames[month_year]};  
+               result[month_year]={"rental":0,"revenue":0,"month":monthNames[month_year]};  
             }
             let initialValue=0.0
             let amount=rental.Payments.reduce((accumulator, currentValue) => accumulator + currentValue.Amount,initialValue)
-            result[month_year]["rentals"]=result[month_year]["rentals"]+1;
+            result[month_year]["rental"]=result[month_year]["rental"]+1;
             result[month_year]["revenue"]=result[month_year]["revenue"]+amount;
          });
       });
