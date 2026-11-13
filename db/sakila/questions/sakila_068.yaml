@@ -1,4 +1,4 @@
-category: [variant,aggregate,groupby,complex]
+category: [variant,aggregate,complex]
 database: sakila
 question: Generate a table showing the  monthly rental count and monthly revenue, grouped by month across all years in the database.
 js_ref: |  
