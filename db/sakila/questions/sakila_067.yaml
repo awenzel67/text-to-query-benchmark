@@ -1,6 +1,6 @@
 category: [variant,aggregate,groupby]
 database: sakila
-question: For each day of the week, compute the total number of customers served.
+question: For each day of the week, compute the total number of rentals.
 js_ref: |        
       var weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let result={};
