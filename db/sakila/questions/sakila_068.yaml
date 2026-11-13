@@ -1,6 +1,6 @@
 category: [variant,aggregate,groupby,complex]
 database: sakila
-question: Generate a report showing the  monthly rental count and monthly revenue, grouped by month across all years in the database.
+question: Generate a table showing the  monthly rental count and monthly revenue, grouped by month across all years in the database.
 js_ref: |  
       let result={};
       var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
