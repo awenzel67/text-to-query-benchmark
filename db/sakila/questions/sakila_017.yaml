@@ -2,15 +2,17 @@ category: [aggregate,groupby]
 database: sakila
 question: I need a table with the mean number of custumers per week day.
 js_ref: |  
+      var weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let result={};
       data.customers.map(customer=>{
          customer.Rentals.map(rental=>{
             let date = new Date(rental.Rental_Date);
             let week_day=date.getDay();
+            let week_day_name=weekdayNames[week_day]
             if (!(week_day in result)) {
-               result[week_day]=0;  
+               result[week_day_name]=0;  
             }
-            result[week_day]+=1;
+            result[week_day_name]+=1;
          });
       });
             
