@@ -1,6 +1,6 @@
 category: [aggregate,complex]
 database: sakila
-question: I need a table with the total number of rentals and revenue per month of year.
+question: I need a table with the total number of rentals and revenue per month (full name) of year.
 
 js_ref: |  
       let result={};

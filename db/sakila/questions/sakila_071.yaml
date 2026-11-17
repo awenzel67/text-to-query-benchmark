@@ -9,29 +9,27 @@ js_ref: |
                customer.Rentals.map( rental =>{
                   if (!(rental.Return_Date>''))
                   {
-                     films.push(rental.filmId)    
+                     films.push(String(rental.filmId))    
                   }
                }) 
             });
+            
       let filmPrice={}
       data.films.map( film =>{
-         let afilm={
-            "Cost":film.Replacement_Cost,
-            "Title":film.Title
-         }
-         filmPrice[film.filmId]=afilm
+         filmPrice[String(film.filmId)]= film.Replacement_Cost
       });
+      
       var total_cost=0.0;
-      for (filmId in films)
+      for (let i=0;i < films.length; i++)
       {
+         let filmId=films[i]
          if (filmId in filmPrice)
          {
-            let cost = filmPrice[filmId]["Cost"];
+            let cost = filmPrice[filmId];
             total_cost+=cost;
          }
       } 
-      result=total_cost
-            
+      result=total_cost      
 sql_ref: |
    select sum(film.replacement_cost) as total_cost from 
    rental join 
