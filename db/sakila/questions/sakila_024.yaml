@@ -1,7 +1,6 @@
 category: [aggregate,filter,projection,join,sqljoin,groupby,complex]
 database: sakila
 question: Which film has generated the highest total revenue in each genre?
-
 js_ref: |  
       let result={};
       let film_cat={}
