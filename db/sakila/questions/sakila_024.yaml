@@ -1,6 +1,6 @@
 category: [aggregate,filter,projection,join,sqljoin,groupby,complex]
 database: sakila
-question: What is the best selling film in every film category?
+question: Which film has generated the highest total revenue in each genre?
 
 js_ref: |  
       let result={};
