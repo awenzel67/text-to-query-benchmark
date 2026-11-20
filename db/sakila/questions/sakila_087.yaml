@@ -3,37 +3,32 @@ database: sakila
 question:  Which film was returned the latest?
 js_ref: |  
    var max_time=0.0;
-   var film_title=''
+   var film_titles=[]
+   var maxd=''
    data.customers.map((customer) => {
       customer.Rentals.map(rental=>{
           {
               var rt=rental.Return_Date;
               var ru=rental.Rental_Date;
-              if (rt>'' && ru>'')
+              if (rt>'' && rt>maxd)
               { 
-                 let dfrom=new Date(ru);
-                 let dto=new Date(rt);
-                 var days= (dto.getTime() - dfrom.getTime()) / 1000/60.0/60.0/24.0;
-                 if (days>max_time)
-                 {
-                     max_time=days;
-                     film_title=rental.Film_Title;
-                 }
+                  film_titles=[rental.Film_Title];
+                  maxd=rt;
+              }
+              else if (rt>'' && rt==maxd)
+              { 
+                film_titles.push(rental.Film_Title);
               }
           }
       })
    });
-            
+   result=film_titles         
 sql_ref: |
-   select film.title 
-   from rental join
-   inventory on inventory.inventory_id=rental.inventory_id join
-   film on inventory.film_id=film.film_id
-   
-   where not return_date is null
-   and
-   JulianDay(return_date)- JulianDay(rental_date)
-   =(
-   select max( JulianDay(return_date)- JulianDay(rental_date)) from rental
-   where not return_date is null
-   );
+   select film.title
+   from rental
+   join inventory on inventory.inventory_id=rental.inventory_id
+   join film on film.film_id=inventory.film_id
+   where rental.return_date=(
+   select max(Return_Date)
+   from rental
+   )
