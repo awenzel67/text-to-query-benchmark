@@ -1,6 +1,6 @@
 category: [extra,aggregate,complex]
 database: sakila
-question: Which customer brought in the most revenue?
+question: Which customer (use full name) brought in the most revenue?
 js_ref: |
     let result={};    
      data.customers.map(customer=>{
