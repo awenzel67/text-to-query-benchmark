@@ -1,6 +1,6 @@
 category: [extra,filter,projection]
 database: sakila
-question: 'Is there a movie with duration longer 3 hours?'
+question: 'Which movies are longer than 3 hours?'
 js_ref: |  
    let result=data.films
    .filter((movie)=>movie.Length>180)
