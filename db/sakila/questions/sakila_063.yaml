@@ -1,6 +1,6 @@
 category: [variant,aggegate]
 database: sakila
-question: What is the total number of available copies of films featuring 'MARY KEITEL' across all rental stores?
+question: What is the total number of all copies of films featuring 'MARY KEITEL' across all rental stores?
 js_ref: |  
     let result=0;
     let moviesWithActor = data.films.filter(film=>{
