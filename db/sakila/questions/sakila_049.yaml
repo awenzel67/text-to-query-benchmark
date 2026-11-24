@@ -88,4 +88,4 @@ sql_ref: |
 
       where a.cat_id=b.cat_id
       and a.total_amount=b.max_total_amount
-      and cat_name='new adault'
+      and a.cat_name='new adault'
