@@ -1,6 +1,6 @@
 category: [variant,aggregate]
 database: sakila
-question: What is the average length of a rental period?
+question: What is the average length of the films rental duration?
 js_ref: |  
     let numbers=data.films.map(film=>{
           return film.Rental_Duration;
