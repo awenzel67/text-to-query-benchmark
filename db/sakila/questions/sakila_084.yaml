@@ -20,7 +20,7 @@ js_ref: |
    result=result.length
             
 sql_ref: |
-   select film.title 
+   select count(*)
    from 
    rental join
    inventory on inventory.inventory_id=rental.inventory_id join
