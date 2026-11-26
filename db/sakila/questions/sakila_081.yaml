@@ -19,7 +19,7 @@ js_ref: |
       });
       let result=count_films;          
 sql_ref: |
-      select  * from rental
+      select count(*) from rental
       where 
       return_date >= '2005-06-15 00:00:00.000'
       and
